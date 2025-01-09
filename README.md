@@ -14,10 +14,14 @@ Version 1.2 of the library includes support for the InvenSense Digital Motion Pr
 Not all examples are ported. For further examples, please look at the original project.
 
 1. Clone Repository
-2. Goto to example directory (for example `spi_agmt`)
-3. Modify pins (MISO, MOSI, CS...) in `main/main.c`
-4. `idf.py set-target ...`
-5. `idf.py build flash monitor`
+2. Go to to example directory (for example `spi_agmt`)
+   `cd ./icm20948/examples/spi_agmt`
+3. Set ESP chip
+   `idf.py set-target esp32`
+4. Configure ICM-20948 settings
+   `idf.py menuconfig` and go to `ICM-20948 Settings`
+5. Build, flash
+   `idf.py build flash monitor`
 
 # Related projects
 * [SparkFun_ICM-20948_ArduinoLibrary](https://github.com/sparkfun/SparkFun_ICM-20948_ArduinoLibrary)

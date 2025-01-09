@@ -16,26 +16,20 @@
 
 #define TAG "spi_agmt"
 
-#define SPI_MOSI 9
-#define SPI_SCK 3
-#define SPI_MISO 5
-#define SPI_CS 18
-
 spi_bus_config_t buscfg = {
-        .miso_io_num = SPI_MISO,
-        .mosi_io_num = SPI_MOSI,
-        .sclk_io_num = SPI_SCK,
+        .miso_io_num = CONFIG_SPI_MASTER_MISO,
+        .mosi_io_num = CONFIG_SPI_MASTER_MOSI,
+        .sclk_io_num = CONFIG_SPI_MASTER_SCK,
         .quadwp_io_num = -1,
         .quadhd_io_num = -1,
-        .max_transfer_sz = 512 * 8  // 4095 bytes is the max size of data that can be sent because of hardware limitations
+        .max_transfer_sz = 512 * 8 /* 4095 bytes is the max size of data that can be sent because of hardware limitations */
 };
 
 spi_device_interface_config_t devcfg = {
-        // configure device_structure
-        .clock_speed_hz = 4000000,  // Clock out at 4 MHz
-        .mode = 0,                  // SPI mode 0
-        .spics_io_num = SPI_CS,     // This field is used to specify the GPIO pin that is to be used as CS'
-        .queue_size = 1             // We want to be able to queue 7 transactions at a time
+        .clock_speed_hz = 4000000,  			/* Clock out at 4 MHz */ 
+        .mode = 0,                  			/* SPI mode 0 */
+        .spics_io_num = CONFIG_SPI_MASTER_CS, 	/* This field is used to specify the GPIO pin that is to be used as CS' */
+        .queue_size = 1             			/* We want to be able to queue 7 transactions at a time */
 };
 
 

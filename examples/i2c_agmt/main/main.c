@@ -17,9 +17,9 @@
 /* i2c bus configuration */
 i2c_config_t conf = {
 	.mode = I2C_MODE_MASTER,
-	.sda_io_num = (gpio_num_t) 9,
+	.sda_io_num = (gpio_num_t) CONFIG_I2C_MASTER_SDA,
 	.sda_pullup_en = GPIO_PULLUP_ENABLE,
-	.scl_io_num = (gpio_num_t) 3,
+	.scl_io_num = (gpio_num_t) CONFIG_I2C_MASTER_SCL,
 	.scl_pullup_en = GPIO_PULLUP_ENABLE,
 	.master.clk_speed = 400000,
 	.clk_flags = I2C_SCLK_SRC_FLAG_FOR_NOMAL
@@ -27,7 +27,7 @@ i2c_config_t conf = {
 
 /* ICM 20948 configuration */
 ICM_20948_Config_i2c_t icm_config = {
-	.i2c_port = I2C_NUM_0,
+	.i2c_port = CONFIG_I2C_MASTER_NUM,
 	.i2c_addr = ICM_20948_I2C_ADDR_AD1
 };
 
