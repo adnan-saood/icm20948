@@ -1,18 +1,7 @@
-/*
-
-This file contains a useful c translation of the datasheet register map
-
-*/
-
 #ifndef _ICM_20948_REGISTERS_H_
 #define _ICM_20948_REGISTERS_H_
 
 #include <stdint.h>
-
-#ifdef __cplusplus
-extern "C"
-{
-#endif /* __cplusplus */
 
   typedef enum
   {
@@ -202,13 +191,13 @@ extern "C"
     M_REG_CNTL3,
     M_REG_TS1,
     M_REG_TS2,
-  } ICM_20948_Reg_Addr_e; // These enums are not needed for the user, so they stay in this scope (simplifies naming among other things)
+  } icm20948_reg_addr_e; // These enums are not needed for the user, so they stay in this scope (simplifies naming among other things)
 
   // Type definitions for the registers
   typedef struct
   {
     uint8_t WHO_AM_I;
-  } ICM_20948_WHO_AM_I_t;
+  } icm20948_who_am_i_t;
 
   typedef struct
   {
@@ -220,7 +209,7 @@ extern "C"
     uint8_t I2C_MST_EN : 1;
     uint8_t FIFO_EN : 1;
     uint8_t DMP_EN : 1;
-  } ICM_20948_USER_CTRL_t;
+  } icm20948_user_ctrl_t;
 
   typedef struct
   {
@@ -229,7 +218,7 @@ extern "C"
     uint8_t ACCEL_CYCLE : 1;
     uint8_t I2C_MST_CYCLE : 1;
     uint8_t reserved_1 : 1;
-  } ICM_20948_LP_CONFIG_t;
+  } icm20948_lp_config_t;
 
   typedef struct
   {
@@ -239,14 +228,14 @@ extern "C"
     uint8_t LP_EN : 1;
     uint8_t SLEEP : 1;
     uint8_t DEVICE_RESET : 1;
-  } ICM_20948_PWR_MGMT_1_t;
+  } icm20948_pwr_mgmt_1_t;
 
   typedef struct
   {
     uint8_t DISABLE_GYRO : 3;
     uint8_t DIABLE_ACCEL : 3;
     uint8_t reserved_0 : 2;
-  } ICM_20948_PWR_MGMT_2_t;
+  } icm20948_pwr_mgmt_2_t;
 
   typedef struct
   {
@@ -258,7 +247,7 @@ extern "C"
     uint8_t INT1_LATCH_EN : 1;
     uint8_t INT1_OPEN : 1;
     uint8_t INT1_ACTL : 1;
-  } ICM_20948_INT_PIN_CFG_t;
+  } icm20948_int_pin_cfg_t;
 
   typedef struct
   {
@@ -268,13 +257,13 @@ extern "C"
     uint8_t WOM_INT_EN : 1;
     uint8_t reserved_0 : 3;
     uint8_t REG_WOF_EN : 1;
-  } ICM_20948_INT_ENABLE_t;
+  } icm20948_int_enable_0_t;
 
   typedef struct
   {
     uint8_t RAW_DATA_0_RDY_EN : 1;
     uint8_t reserved_0 : 7;
-  } ICM_20948_INT_ENABLE_1_t;
+  } icm20948_int_enable_1_t;
 
   typedef union
   {
@@ -292,7 +281,7 @@ extern "C"
       uint8_t FIFO_OVERFLOW_EN_4 : 1;
       uint8_t reserved_0 : 3;
     } individual;
-  } ICM_20948_INT_ENABLE_2_t;
+  } icm20948_int_enable_2_t;
 
   // typedef struct{
   // 	uint8_t FIFO_OVERFLOW_EN_40		: 5;
@@ -315,7 +304,7 @@ extern "C"
       uint8_t FIFO_WM_EN_4 : 1;
       uint8_t reserved_0 : 3;
     } individual;
-  } ICM_20948_INT_ENABLE_3_t;
+  } icm20948_int_enable_3_t;
 
   // typedef struct{
   // 	uint8_t FIFO_WM_EN_40			: 5;
@@ -332,7 +321,7 @@ extern "C"
     uint8_t I2C_LOST_ARB : 1;
     uint8_t I2C_PERIPH4_DONE : 1;
     uint8_t PASS_THROUGH : 1;
-  } ICM_20948_I2C_MST_STATUS_t;
+  } icm20948_i2c_mst_status_t;
 
   typedef struct
   {
@@ -341,7 +330,7 @@ extern "C"
     uint8_t reserved1 : 1;
     uint8_t DMP_INT_Tilt_Event : 1;
     uint8_t reserved2 : 4;
-  } ICM_20948_DMP_INT_STATUS_t; // Mostly guesswork from InvenSense App Note
+  } icm20948_dmp_int_status_t; // Mostly guesswork from InvenSense App Note
 
   typedef struct
   {
@@ -350,13 +339,13 @@ extern "C"
     uint8_t PLL_RDY_INT : 1;
     uint8_t WOM_INT : 1;
     uint8_t reserved_0 : 4;
-  } ICM_20948_INT_STATUS_t;
+  } icm20948_int_status_t;
 
   typedef struct
   {
     uint8_t RAW_DATA_0_RDY_INT : 1;
     uint8_t reserved_0 : 7;
-  } ICM_20948_INT_STATUS_1_t;
+  } icm20948_int_status_1_t;
 
   // typedef union{
   // 	struct{
@@ -371,13 +360,13 @@ extern "C"
   // 		uint8_t FIFO_OVERFLOW_INT_4 	: 1;
   // 		uint8_t reserved_0				: 3;
   // 	}individual;
-  // }ICM_20948_INT_STATUS_2_t;
+  // }icm20948_int_status_2_t;
 
   typedef struct
   {
     uint8_t FIFO_OVERFLOW_INT_40 : 5;
     uint8_t reserved_0 : 3;
-  } ICM_20948_INT_STATUS_2_t;
+  } icm20948_int_status_2_t;
 
   // typedef union{
   // 	struct{
@@ -392,98 +381,98 @@ extern "C"
   // 		uint8_t FIFO_WM_INT_4 	: 1;
   // 		uint8_t reserved_0				: 3;
   // 	}individual;
-  // }ICM_20948_INT_STATUS_3_t;
+  // }icm20948_int_status_3_t;
 
   typedef struct
   {
     uint8_t FIFO_WM_INT40 : 5;
     uint8_t reserved_0 : 3;
-  } ICM_20948_INT_STATUS_3_t;
+  } icm20948_int_status_3_t;
 
   typedef struct
   {
     uint8_t DELAY_TIMEH;
-  } ICM_20948_DELAY_TIMEH_t;
+  } icm20948_delay_timeh_t;
 
   typedef struct
   {
     uint8_t DELAY_TIMEL;
-  } ICM_20948_DELAY_TIMEL_t;
+  } icm20948_delay_timel_t;
 
   typedef struct
   {
     uint8_t ACCEL_XOUT_H;
-  } ICM_20948_ACCEL_XOUT_H_t;
+  } icm20948_accel_xout_h_t;
 
   typedef struct
   {
     uint8_t ACCEL_XOUT_L;
-  } ICM_20948_ACCEL_XOUT_L_t;
+  } icm20948_accel_xout_l_t;
 
   typedef struct
   {
     uint8_t ACCEL_YOUT_H;
-  } ICM_20948_ACCEL_YOUT_H_t;
+  } icm20948_accel_yout_h_t;
 
   typedef struct
   {
     uint8_t ACCEL_YOUT_L;
-  } ICM_20948_ACCEL_YOUT_L_t;
+  } icm20948_accel_yout_l_t;
 
   typedef struct
   {
     uint8_t ACCEL_ZOUT_H;
-  } ICM_20948_ACCEL_ZOUT_H_t;
+  } icm20948_accel_zout_h_t;
 
   typedef struct
   {
     uint8_t ACCEL_ZOUT_L;
-  } ICM_20948_ACCEL_ZOUT_L_t;
+  } icm20948_accel_zout_l_t;
 
   typedef struct
   {
     uint8_t GYRO_XOUT_H;
-  } ICM_20948_GYRO_XOUT_H_t;
+  } icm20948_gyro_xout_h_t;
 
   typedef struct
   {
     uint8_t GYRO_XOUT_L;
-  } ICM_20948_GYRO_XOUT_L_t;
+  } icm20948_gyro_xout_l_t;
 
   typedef struct
   {
     uint8_t GYRO_YOUT_H;
-  } ICM_20948_GYRO_YOUT_H_t;
+  } icm20948_gyro_yout_h_t;
 
   typedef struct
   {
     uint8_t GYRO_YOUT_L;
-  } ICM_20948_GYRO_YOUT_L_t;
+  } icm20948_gyro_yout_l_t;
 
   typedef struct
   {
     uint8_t GYRO_ZOUT_H;
-  } ICM_20948_GYRO_ZOUT_H_t;
+  } icm20948_gyro_zout_h_t;
 
   typedef struct
   {
     uint8_t GYRO_ZOUT_L;
-  } ICM_20948_GYRO_ZOUT_L_t;
+  } icm20948_gyro_zout_l_t;
 
   typedef struct
   {
     uint8_t TEMP_OUT_H;
-  } ICM_20948_TEMP_OUT_H_t;
+  } icm20948_temp_out_h_t;
 
   typedef struct
   {
     uint8_t TEMP_OUT_L;
-  } ICM_20948_TEMP_OUT_L_t;
+  } icm20948_temp_out_l_t;
 
   typedef struct
   {
     uint8_t DATA; // Note: this is not worth copying 24 times, despite there being 24 registers like this one
-  } ICM_20948_EXT_PERIPH_SENS_DATA_t;
+  } icm20948_ext_periph_sens_data_t;
 
   typedef struct
   {
@@ -492,7 +481,7 @@ extern "C"
     uint8_t PERIPH_2_FIFO_EN : 1;
     uint8_t PERIPH_3_FIFO_EN : 1;
     uint8_t reserved_0 : 4;
-  } ICM_20948_FIFO_EN_1_t;
+  } icm20948_fifo_en_1_t;
 
   typedef struct
   {
@@ -502,118 +491,118 @@ extern "C"
     uint8_t GYRO_Z_FIFO_EN : 1;
     uint8_t ACCEL_FIFO_EN : 1;
     uint8_t reserved_0 : 3;
-  } ICM_20948_FIFO_EN_2_t;
+  } icm20948_fifo_en_2_t;
 
   typedef struct
   {
     uint8_t FIFO_RESET : 5;
     uint8_t reserved_0 : 3;
-  } ICM_20948_FIFO_RST_t;
+  } icm20948_fifo_rst_t;
 
   typedef struct
   {
     uint8_t FIFO_MODE : 5;
     uint8_t reserved_0 : 3;
-  } ICM_20948_FIFO_MODE_t;
+  } icm20948_fifo_mode_t;
 
   typedef struct
   {
     uint8_t FIFO_COUNTH;
-  } ICM_20948_FIFO_COUNTH_t;
+  } icm20948_fifo_counth_t;
 
   typedef struct
   {
     uint8_t FIFO_COUNTL;
-  } ICM_20948_FIFO_COUNTL_t;
+  } icm20948_fifo_countl_t;
 
   typedef struct
   {
     uint8_t RAW_DATA_RDY : 4;
     uint8_t reserved_0 : 3;
     uint8_t WOF_STATUS : 1;
-  } ICM_20948_DATA_RDY_STATUS_t;
+  } icm20948_data_rdy_status_t;
 
   typedef struct
   {
     uint8_t FIFO_CFG : 1;
     uint8_t reserved_0 : 7;
-  } ICM_20948_FIFO_CFG_t;
+  } icm20948_fifo_cfg_t;
 
   // User bank 1 Types
 
   typedef struct
   {
     uint8_t XG_ST_DATA;
-  } ICM_20948_SELF_TEST_X_GYRO_t;
+  } icm20948_self_test_x_gyro_t;
 
   typedef struct
   {
     uint8_t YG_ST_DATA;
-  } ICM_20948_SELF_TEST_Y_GYRO_t;
+  } icm20948_self_test_y_gyro_t;
 
   typedef struct
   {
     uint8_t ZG_ST_DATA;
-  } ICM_20948_SELF_TEST_Z_GYRO_t;
+  } icm20948_self_test_z_gyro_t;
 
   typedef struct
   {
     uint8_t XA_ST_DATA;
-  } ICM_20948_SELF_TEST_X_ACCEL_t;
+  } icm20948_self_test_x_accel_t;
 
   typedef struct
   {
     uint8_t YA_ST_DATA;
-  } ICM_20948_SELF_TEST_Y_ACCEL_t;
+  } icm20948_self_test_y_accel_t;
 
   typedef struct
   {
     uint8_t ZA_ST_DATA;
-  } ICM_20948_SELF_TEST_Z_ACCEL_t;
+  } icm20948_self_test_z_accel_t;
 
   typedef struct
   {
     uint8_t XA_OFFS_14_7;
-  } ICM_20948_XA_OFFS_H_t;
+  } icm20948_xa_offs_h_t;
 
   typedef struct
   {
     uint8_t reserved_0 : 1;
     uint8_t XA_OFFS_6_0 : 7;
-  } ICM_20948_XA_OFFS_L_t;
+  } icm20948_xa_offs_l_t;
 
   typedef struct
   {
     uint8_t YA_OFFS_14_7;
-  } ICM_20948_YA_OFFS_H_t;
+  } icm20948_ya_offs_h_t;
 
   typedef struct
   {
     uint8_t reserved_0 : 1;
     uint8_t YA_OFFS_6_0 : 7;
-  } ICM_20948_YA_OFFS_L_t;
+  } icm20948_ya_offs_l_t;
 
   typedef struct
   {
     uint8_t ZA_OFFS_14_7;
-  } ICM_20948_ZA_OFFS_H_t;
+  } icm20948_za_offs_h_t;
 
   typedef struct
   {
     uint8_t reserved_0 : 1;
     uint8_t ZA_OFFS_6_0 : 7;
-  } ICM_20948_ZA_OFFS_L_t;
+  } icm20948_za_offs_l_t;
 
   typedef struct
   {
     uint8_t TBC_PLL;
-  } ICM_20948_TIMEBASE_CORRECTION_PLL_t;
+  } icm20948_timebase_correction_pll_t;
 
   // User Bank 2 Types
   typedef struct
   {
     uint8_t GYRO_SMPLRT_DIV;
-  } ICM_20948_GYRO_SMPLRT_DIV_t;
+  } icm20948_gyro_smplrt_div_t;
 
   typedef struct
   {
@@ -621,7 +610,7 @@ extern "C"
     uint8_t GYRO_FS_SEL : 2;
     uint8_t GYRO_DLPFCFG : 3;
     uint8_t reserved_0 : 2;
-  } ICM_20948_GYRO_CONFIG_1_t;
+  } icm20948_gyro_config_1_t;
 
   typedef struct
   {
@@ -630,66 +619,66 @@ extern "C"
     uint8_t YGYRO_CTEN : 1;
     uint8_t XGYRO_CTEN : 1;
     uint8_t reserved_0 : 2;
-  } ICM_20948_GYRO_CONFIG_2_t;
+  } icm20948_gyro_config_2_t;
 
   typedef struct
   {
     uint8_t XG_OFFS_USER_H;
-  } ICM_20948_XG_OFFS_USRH_t;
+  } icm20948_xg_offs_usrh_t;
 
   typedef struct
   {
     uint8_t XG_OFFS_USER_L;
-  } ICM_20948_XG_OFFS_USRL_t;
+  } icm20948_xg_offs_usrl_t;
 
   typedef struct
   {
     uint8_t YG_OFFS_USER_H;
-  } ICM_20948_YG_OFFS_USRH_t;
+  } icm20948_yg_offs_usrh_t;
 
   typedef struct
   {
     uint8_t YG_OFFS_USER_L;
-  } ICM_20948_YG_OFFS_USRL_t;
+  } icm_20948_yg_offs_usrl_t;
 
   typedef struct
   {
     uint8_t ZG_OFFS_USER_H;
-  } ICM_20948_ZG_OFFS_USRH_t;
+  } icm20948_zg_offs_usrh_t;
 
   typedef struct
   {
     uint8_t ZG_OFFS_USER_L;
-  } ICM_20948_ZG_OFFS_USRL_t;
+  } icm20948_zg_offs_usrl_t;
 
   typedef struct
   {
     uint8_t ODR_ALIGN_EN : 1;
     uint8_t reserved_0 : 7;
-  } ICM_20948_ODR_ALIGN_EN_t;
+  } icm20948_odr_align_en_t;
 
   typedef struct
   {
     uint8_t ACCEL_SMPLRT_DIV_11_8 : 4;
     uint8_t reserved_0 : 4;
-  } ICM_20948_ACCEL_SMPLRT_DIV_1_t;
+  } icm20948_accel_smplrt_div_1_t;
 
   typedef struct
   {
     uint8_t ACCEL_SMPLRT_DIV_7_0;
-  } ICM_20948_ACCEL_SMPLRT_DIV_2_t;
+  } icm20948_accel_smprlt_div_2_t;
 
   typedef struct
   {
     uint8_t ACCEL_INTEL_MODE_INT : 1;
     uint8_t ACCEL_INTEL_EN : 1;
     uint8_t reserved_0 : 6;
-  } ICM_20948_ACCEL_INTEL_CTRL_t;
+  } icm20948_accel_intel_ctrl_t;
 
   typedef struct
   {
     uint8_t WOM_THRESHOLD;
-  } ICM_20948_ACCEL_WOM_THR_t;
+  } icm20948_accel_wom_thr_t;
 
   typedef struct
   {
@@ -697,7 +686,7 @@ extern "C"
     uint8_t ACCEL_FS_SEL : 2;
     uint8_t ACCEL_DLPFCFG : 3;
     uint8_t reserved_0 : 2;
-  } ICM_20948_ACCEL_CONFIG_t;
+  } icm20948_accel_config_t;
 
   typedef struct
   {
@@ -706,7 +695,7 @@ extern "C"
     uint8_t AY_ST_EN : 1;
     uint8_t AX_ST_EN : 1;
     uint8_t reserved_0 : 3;
-  } ICM_20948_ACCEL_CONFIG_2_t;
+  } icm20948_accel_config_2_t;
 
   typedef struct
   {
@@ -715,19 +704,19 @@ extern "C"
     uint8_t WOF_DEGLITCH_EN : 1;
     uint8_t reserved_0 : 1;
     uint8_t DELAY_TIME_EN : 1;
-  } ICM_20948_FSYNC_CONFIG_t;
+  } icm20948_fsync_config_t;
 
   typedef struct
   {
     uint8_t TEMP_DLPFCFG : 3;
     uint8_t reserved_0 : 5;
-  } ICM_20948_TEMP_CONFIG_t;
+  } icm20948_temp_config_t;
 
   typedef struct
   {
     uint8_t REG_LP_DMP_EN : 1;
     uint8_t reserved_0 : 7;
-  } ICM_20948_MOD_CTRL_USR_t;
+  } icm20948_mod_ctrl_usr_t;
 
   // Bank 3 Types
 
@@ -735,7 +724,7 @@ extern "C"
   {
     uint8_t I2C_MST_ODR_CONFIG : 4;
     uint8_t reserved_0 : 4;
-  } ICM_20948_I2C_MST_ODR_CONFIG_t;
+  } icm20948_i2c_mst_odr_config_t;
 
   typedef struct
   {
@@ -743,7 +732,7 @@ extern "C"
     uint8_t I2C_MST_P_NSR : 1;
     uint8_t reserved_0 : 2;
     uint8_t MULT_MST_EN : 1;
-  } ICM_20948_I2C_MST_CTRL_t;
+  } icm20948_i2c_mst_ctrl_t;
 
   typedef struct
   {
@@ -754,18 +743,18 @@ extern "C"
     uint8_t I2C_PERIPH4_DELAY_EN : 1;
     uint8_t reserved_0 : 2;
     uint8_t DELAY_ES_SHADOW : 1;
-  } ICM_20948_I2C_MST_DELAY_CTRL_t;
+  } icm20948_i2c_mst_delay_ctrl_t;
 
   typedef struct
   {
     uint8_t ID : 7;
     uint8_t RNW : 1;
-  } ICM_20948_I2C_PERIPHX_ADDR_t;
+  } icm20948_i2c_periphx_addr_t;
 
   typedef struct
   {
     uint8_t REG;
-  } ICM_20948_I2C_PERIPHX_REG_t;
+  } icm20948_i2c_periphx_reg_t;
 
   typedef struct
   {
@@ -774,12 +763,12 @@ extern "C"
     uint8_t REG_DIS : 1;
     uint8_t BYTE_SW : 1;
     uint8_t EN : 1;
-  } ICM_20948_I2C_PERIPHX_CTRL_t;
+  } icm20948_i2c_periphx_ctrl_t;
 
   typedef struct
   {
     uint8_t DO;
-  } ICM_20948_I2C_PERIPHX_DO_t;
+  } icm20948_i2c_periphx_do_t;
 
   typedef struct
   {
@@ -787,12 +776,12 @@ extern "C"
     uint8_t REG_DIS : 1;
     uint8_t INT_EN : 1;
     uint8_t EN : 1;
-  } ICM_20948_I2C_PERIPH4_CTRL_t;
+  } icm20948_i2c_periph4_ctrl_t;
 
   typedef struct
   {
     uint8_t DI;
-  } ICM_20948_I2C_PERIPH4_DI_t;
+  } icm20948_i2c_periph4_di_t;
 
   // Bank select register!
 
@@ -801,10 +790,7 @@ extern "C"
     uint8_t reserved_0 : 4;
     uint8_t USER_BANK : 2;
     uint8_t reserved_1 : 2;
-  } ICM_20948_REG_BANK_SEL_t;
+  } icm20948_reg_bank_sel_t;
 
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
 
 #endif /* _ICM_20948_REGISTERS_H_ */

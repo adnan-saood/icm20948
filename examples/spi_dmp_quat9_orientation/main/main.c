@@ -36,12 +36,12 @@ spi_device_interface_config_t devcfg = {
 
 
 
-void init_dmp(ICM_20948_Device_t *icm)
+void init_dmp(icm20948_device_t *icm)
 {
   	bool success = true; // Use success to show if the DMP configuration was successful
 
   	// Initialize the DMP with defaults.
-  	success &= (ICM_20948_init_dmp_sensor_with_defaults(icm) == ICM_20948_Stat_Ok);
+  	success &= (icm20948_init_dmp_sensor_with_defaults(icm) == ICM_20948_STAT_OK);
 	ESP_LOGI(TAG, "A: %d", success);
 	// DMP sensor options are defined in ICM_20948_DMP.h
 	//    INV_ICM20948_SENSOR_ACCELEROMETER               (16-bit accel)
@@ -61,32 +61,32 @@ void init_dmp(ICM_20948_Device_t *icm)
 	//    INV_ICM20948_SENSOR_ORIENTATION                 (32-bit 9-axis quaternion + heading accuracy)
 
 	// Enable the DMP orientation sensor
-	success &= (inv_icm20948_enable_dmp_sensor(icm, INV_ICM20948_SENSOR_ORIENTATION, 1) == ICM_20948_Stat_Ok);
+	success &= (inv_icm20948_enable_dmp_sensor(icm, INV_ICM20948_SENSOR_ORIENTATION, 1) == ICM_20948_STAT_OK);
 
 	// Enable any additional sensors / features
-	//success &= (myICM.enableDMPSensor(INV_ICM20948_SENSOR_RAW_GYROSCOPE) == ICM_20948_Stat_Ok);
-	//success &= (myICM.enableDMPSensor(INV_ICM20948_SENSOR_RAW_ACCELEROMETER) == ICM_20948_Stat_Ok);
-	//success &= (myICM.enableDMPSensor(INV_ICM20948_SENSOR_MAGNETIC_FIELD_UNCALIBRATED) == ICM_20948_Stat_Ok);
+	//success &= (myICM.enableDMPSensor(INV_ICM20948_SENSOR_RAW_GYROSCOPE) == ICM_20948_STAT_OK);
+	//success &= (myICM.enableDMPSensor(INV_ICM20948_SENSOR_RAW_ACCELEROMETER) == ICM_20948_STAT_OK);
+	//success &= (myICM.enableDMPSensor(INV_ICM20948_SENSOR_MAGNETIC_FIELD_UNCALIBRATED) == ICM_20948_STAT_OK);
 
 	// Configuring DMP to output data at multiple ODRs:
 	// DMP is capable of outputting multiple sensor data at different rates to FIFO.
 	// Setting value can be calculated as follows:
 	// Value = (DMP running rate / ODR ) - 1
 	// E.g. For a 5Hz ODR rate when DMP is running at 55Hz, value = (55/5) - 1 = 10.
-	success &= (inv_icm20948_set_dmp_sensor_period(icm, DMP_ODR_Reg_Quat9, 0) == ICM_20948_Stat_Ok); // Set to the maximum
-	//success &= (myICM.setDMPODRrate(DMP_ODR_Reg_Accel, 0) == ICM_20948_Stat_Ok); // Set to the maximum
-	//success &= (myICM.setDMPODRrate(DMP_ODR_Reg_Gyro, 0) == ICM_20948_Stat_Ok); // Set to the maximum
-	//success &= (myICM.setDMPODRrate(DMP_ODR_Reg_Gyro_Calibr, 0) == ICM_20948_Stat_Ok); // Set to the maximum
-	//success &= (myICM.setDMPODRrate(DMP_ODR_Reg_Cpass, 0) == ICM_20948_Stat_Ok); // Set to the maximum
-	//success &= (myICM.setDMPODRrate(DMP_ODR_Reg_Cpass_Calibr, 0) == ICM_20948_Stat_Ok); // Set to the maximum
+	success &= (inv_icm20948_set_dmp_sensor_period(icm, DMP_ODR_Reg_Quat9, 0) == ICM_20948_STAT_OK); // Set to the maximum
+	//success &= (myICM.setDMPODRrate(DMP_ODR_Reg_Accel, 0) == ICM_20948_STAT_OK); // Set to the maximum
+	//success &= (myICM.setDMPODRrate(DMP_ODR_Reg_Gyro, 0) == ICM_20948_STAT_OK); // Set to the maximum
+	//success &= (myICM.setDMPODRrate(DMP_ODR_Reg_Gyro_Calibr, 0) == ICM_20948_STAT_OK); // Set to the maximum
+	//success &= (myICM.setDMPODRrate(DMP_ODR_Reg_Cpass, 0) == ICM_20948_STAT_OK); // Set to the maximum
+	//success &= (myICM.setDMPODRrate(DMP_ODR_Reg_Cpass_Calibr, 0) == ICM_20948_STAT_OK); // Set to the maximum
 	// Enable the FIFO
-	success &= (ICM_20948_enable_FIFO(icm, true) == ICM_20948_Stat_Ok);
+	success &= (icm20948_enable_fifo(icm, true) == ICM_20948_STAT_OK);
 	// Enable the DMP
-	success &= (ICM_20948_enable_DMP(icm, 1) == ICM_20948_Stat_Ok);
+	success &= (icm20948_enable_dmp(icm, 1) == ICM_20948_STAT_OK);
 	// Reset DMP
-	success &= (ICM_20948_reset_DMP(icm) == ICM_20948_Stat_Ok);
+	success &= (icm20948_reset_dmp(icm) == ICM_20948_STAT_OK);
 	// Reset FIFO
-	success &= (ICM_20948_reset_FIFO(icm) == ICM_20948_Stat_Ok);
+	success &= (icm20948_reset_fifo(icm) == ICM_20948_STAT_OK);
 
 	// Check success
 	if (success)
@@ -102,16 +102,16 @@ void init_dmp(ICM_20948_Device_t *icm)
 
 void app_main(void)
 {
-	ICM_20948_Device_t icm;
+	icm20948_device_t icm;
 	spi_device_handle_t spi;
 	
 	/* setup SPI bus and add SPI device */
 	ESP_ERROR_CHECK(spi_bus_initialize(SPI3_HOST, &buscfg, SPI_DMA_CH_AUTO));
     ESP_ERROR_CHECK(spi_bus_add_device(SPI3_HOST, &devcfg, &spi));
-	ICM_20948_init_spi(&icm, &spi);
+	icm20948_init_spi(&icm, &spi);
 
 	/* check ID */
-    while (ICM_20948_check_id(&icm) != ICM_20948_Stat_Ok)
+    while (icm20948_check_id(&icm) != ICM_20948_STAT_OK)
 	{
 		ESP_LOGE(TAG, "check id failed");
 		vTaskDelay(1000 / portTICK_PERIOD_MS);
@@ -119,45 +119,45 @@ void app_main(void)
 	ESP_LOGI(TAG, "check id passed");
 
 	/* check whoami */
-	ICM_20948_Status_e stat = ICM_20948_Stat_Err;
+	icm20948_status_e stat = ICM_20948_STAT_ERR;
 	uint8_t whoami = 0x00;
-	while ((stat != ICM_20948_Stat_Ok) || (whoami != ICM_20948_WHOAMI))
+	while ((stat != ICM_20948_STAT_OK) || (whoami != ICM_20948_WHOAMI))
 	{
 		whoami = 0x00;
-		stat = ICM_20948_get_who_am_i(&icm, &whoami);
+		stat = icm20948_get_who_am_i(&icm, &whoami);
 		ESP_LOGE(TAG, "whoami does not match (0x %d). Halting...", whoami);
 		vTaskDelay(1000 / portTICK_PERIOD_MS);
 	}
 
 	/* Here we are doing a SW reset to make sure the device starts in a known state */
-	ICM_20948_sw_reset(&icm);
+	icm20948_sw_reset(&icm);
 	vTaskDelay(250 / portTICK_PERIOD_MS);
 
-	ICM_20948_InternalSensorID_bm sensors = (ICM_20948_InternalSensorID_bm)(ICM_20948_Internal_Acc | ICM_20948_Internal_Gyr);
+	icm20948_internal_sensor_id_bm sensors = (icm20948_internal_sensor_id_bm)(ICM_20948_INTERNAL_ACC | ICM_20948_INTERNAL_GYR);
 
 	/* Set Gyro and Accelerometer to a particular sample mode */
-	// optiona: ICM_20948_Sample_Mode_Continuous. ICM_20948_Sample_Mode_Cycled
-	ICM_20948_set_sample_mode(&icm, sensors, ICM_20948_Sample_Mode_Continuous); 
+	// optiona: SAMPLE_MODE_CONTINUOUS. SAMPLE_MODE_CYCLED
+	icm20948_set_sample_mode(&icm, sensors, SAMPLE_MODE_CONTINUOUS); 
 
 	/* Set full scale ranges for both acc and gyr */
-	ICM_20948_fss_t myfss;
-	myfss.a = gpm2;   // (ICM_20948_ACCEL_CONFIG_FS_SEL_e)
-	myfss.g = dps250; // (ICM_20948_GYRO_CONFIG_1_FS_SEL_e)
-	ICM_20948_set_full_scale(&icm, sensors, myfss);
+	icm20948_fss_t myfss;
+	myfss.a = GPM_2;   // (icm20948_accel_config_fs_sel_e)
+	myfss.g = DPS_250; // (icm20948_gyro_config_1_fs_sel_e)
+	icm20948_set_full_scale(&icm, sensors, myfss);
 
 	/* Set up DLPF configuration */
-	ICM_20948_dlpcfg_t myDLPcfg;
-	myDLPcfg.a = acc_d473bw_n499bw;
-	myDLPcfg.g = gyr_d361bw4_n376bw5;
-	ICM_20948_set_dlpf_cfg(&icm, sensors, myDLPcfg);
+	icm20948_dlpcfg_t myDLPcfg;
+	myDLPcfg.a = ACC_D473BW_N499BW;
+	myDLPcfg.g = GYR_D361BW4_N376BW5;
+	icm20948_set_dlpf_cfg(&icm, sensors, myDLPcfg);
 
 	/* Choose whether or not to use DLPF */
-	ICM_20948_enable_dlpf(&icm, ICM_20948_Internal_Acc, false);
-	ICM_20948_enable_dlpf(&icm, ICM_20948_Internal_Gyr, false);
+	icm20948_enable_dlpf(&icm, ICM_20948_INTERNAL_ACC, false);
+	icm20948_enable_dlpf(&icm, ICM_20948_INTERNAL_GYR, false);
 
 	/* Now wake the sensor up */
-	ICM_20948_sleep(&icm, false);
-	ICM_20948_low_power(&icm, false);
+	icm20948_sleep(&icm, false);
+	icm20948_low_power(&icm, false);
 
 	/* now the fun with DMP starts */
 	init_dmp(&icm);
@@ -166,15 +166,15 @@ void app_main(void)
 	{
 		// Read any DMP data waiting in the FIFO
 		// Note:
-		//    readDMPdataFromFIFO will return ICM_20948_Stat_FIFONoDataAvail if no data is available.
+		//    readDMPdataFromFIFO will return ICM_20948_STAT_FIFO_NO_DATA_AVAIL if no data is available.
 		//    If data is available, readDMPdataFromFIFO will attempt to read _one_ frame of DMP data.
-		//    readDMPdataFromFIFO will return ICM_20948_Stat_FIFOIncompleteData if a frame was present but was incomplete
-		//    readDMPdataFromFIFO will return ICM_20948_Stat_Ok if a valid frame was read.
-		//    readDMPdataFromFIFO will return ICM_20948_Stat_FIFOMoreDataAvail if a valid frame was read _and_ the FIFO contains more (unread) data.
+		//    readDMPdataFromFIFO will return ICM_20948_STAT_FIFO_INCOMPLETE_DATA if a frame was present but was incomplete
+		//    readDMPdataFromFIFO will return ICM_20948_STAT_OK if a valid frame was read.
+		//    readDMPdataFromFIFO will return ICM_20948_STAT_FIFO_MORE_DATA_AVAIL if a valid frame was read _and_ the FIFO contains more (unread) data.
 		icm_20948_DMP_data_t data;
-		ICM_20948_Status_e status = inv_icm20948_read_dmp_data(&icm, &data);
+		icm20948_status_e status = inv_icm20948_read_dmp_data(&icm, &data);
 		/* Was valid data available? */
-  		if ((status == ICM_20948_Stat_Ok) || (status == ICM_20948_Stat_FIFOMoreDataAvail)) 
+  		if ((status == ICM_20948_STAT_OK) || (status == ICM_20948_STAT_FIFO_MORE_DATA_AVAIL)) 
 		{
 			/* We have asked for orientation data so we should receive Quat9 */
 			if ((data.header & DMP_header_bitmap_Quat9) > 0) 
@@ -190,7 +190,7 @@ void app_main(void)
 				ESP_LOGI(TAG, "Q1: %f Q2: %f Q3: %f Accuracy: %d", q1, q2, q3, data.Quat9.Data.Accuracy);
 			}
 		}
-		if(status != ICM_20948_Stat_FIFOMoreDataAvail) {
+		if(status != ICM_20948_STAT_FIFO_MORE_DATA_AVAIL) {
 			vTaskDelay(10 / portTICK_PERIOD_MS);
 		}
 	}

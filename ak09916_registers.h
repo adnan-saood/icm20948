@@ -22,24 +22,24 @@ typedef enum
   // discontinuity
   AK09916_REG_CNTL2 = 0x31,
   AK09916_REG_CNTL3,
-} AK09916_Reg_Addr_e;
+} ak09916_reg_addr_e;
 
 typedef struct
 {
   uint8_t WIA1;
-} AK09916_WIA1_Reg_t;
+} ak09916_wia1_reg_t;
 
 typedef struct
 {
   uint8_t WIA2;
-} AK09916_WIA2_Reg_t;
+} ak09916_wia2_reg_t;
 
 typedef struct
 {
   uint8_t DRDY : 1;
   uint8_t DOR : 1;
   uint8_t reserved_0 : 6;
-} AK09916_ST1_Reg_t;
+} ak09916_st1_reg_t;
 
 // typedef struct{
 
@@ -66,18 +66,18 @@ typedef struct
   uint8_t reserved_0 : 3;
   uint8_t HOFL : 1;
   uint8_t reserved_1 : 4;
-} AK09916_ST2_Reg_t;
+} ak09916_st2_reg_t;
 
 typedef struct
 {
   uint8_t MODE : 5;
   uint8_t reserved_0 : 3;
-} AK09916_CNTL2_Reg_t;
+} ak09916_cntl2_reg_t;
 
 typedef struct
 {
   uint8_t SRST : 1;
   uint8_t reserved_0 : 7;
-} AK09916_CNTL3_Reg_t;
+} ak09916_cntl3_reg_t;
 
 #endif // _AK09916_REGISTERS_H_

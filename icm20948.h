@@ -1,10 +1,3 @@
-/*
-
-This is a C-compatible interface to the features presented by the ICM 20948 9-axis device
-The imementation of the interface is flexible
-
-*/
-
 #ifndef _ICM_20948_C_H_
 #define _ICM_20948_C_H_
 
@@ -14,14 +7,9 @@ The imementation of the interface is flexible
 #include "sdkconfig.h"
 
 #include "icm20948_registers.h"
-#include "icm20948_enumerations.h" // This is to give users access to usable value definiitons
+#include "icm20948_enumerations.h"
 #include "ak09916_enumerations.h"
 #include "icm20948_dmp.h"
-
-#ifdef __cplusplus
-extern "C"
-{
-#endif /* __cplusplus */
 
 extern int memcmp(const void *, const void *, size_t); // Avoid compiler warnings
 
@@ -45,66 +33,66 @@ extern int memcmp(const void *, const void *, size_t); // Avoid compiler warning
 
   typedef enum
   {
-    ICM_20948_Stat_Ok = 0x00, // The only return code that means all is well
-    ICM_20948_Stat_Err,       // A general error
-    ICM_20948_Stat_NotImpl,   // Returned by virtual functions that are not implemented
-    ICM_20948_Stat_ParamErr,
-    ICM_20948_Stat_WrongID,
-    ICM_20948_Stat_InvalSensor, // Tried to apply a function to a sensor that does not support it (e.g. DLPF to the temperature sensor)
-    ICM_20948_Stat_NoData,
-    ICM_20948_Stat_SensorNotSupported,
-    ICM_20948_Stat_DMPNotSupported,    // DMP not supported (enable it in menuconfig)
-    ICM_20948_Stat_DMPVerifyFail,      // DMP was written but did not verify correctly
-    ICM_20948_Stat_FIFONoDataAvail,    // FIFO contains no data
-    ICM_20948_Stat_FIFOIncompleteData, // FIFO contained incomplete data
-    ICM_20948_Stat_FIFOMoreDataAvail,  // FIFO contains more data
-    ICM_20948_Stat_UnrecognisedDMPHeader,
-    ICM_20948_Stat_UnrecognisedDMPHeader2,
-    ICM_20948_Stat_InvalDMPRegister, // Invalid DMP Register
+    ICM_20948_STAT_OK = 0x00, // The only return code that means all is well
+    ICM_20948_STAT_ERR,       // A general error
+    ICM_20948_STAT_NOT_IMPL,   // Returned by virtual functions that are not implemented
+    ICM_20948_STAT_PARAM_ERR,
+    ICM_20948_STAT_WRONG_ID,
+    ICM_20948_STAT_INVALID_SENSOR, // Tried to apply a function to a sensor that does not support it (e.g. DLPF to the temperature sensor)
+    ICM_20948_STAT_NO_DATA,
+    ICM_20948_STAT_SENSOR_NOT_SUPPORTED,
+    ICM_20948_STAT_DMP_NOT_SUPPORTED,
+    ICM_20948_STAT_DMP_VERIFY_FAIL,      // DMP was written but did not verify correctly
+    ICM_20948_STAT_FIFO_NO_DATA_AVAIL,
+    ICM_20948_STAT_FIFO_INCOMPLETE_DATA,
+    ICM_20948_STAT_FIFO_MORE_DATA_AVAIL,
+    ICM_20948_STAT_UNRECOGNISED_DMP_HEADER,
+    ICM_20948_STAT_UNRECOGNISED_DMP_HEADER_2,
+    ICM_20948_STAT_INVALID_DMP_REGISTER,
 
-    ICM_20948_Stat_NUM,
-    ICM_20948_Stat_Unknown,
-  } ICM_20948_Status_e;
+    ICM_20948_STAT_NUM,
+    ICM_20948_STAT_UNKNOWN,
+  } icm20948_status_e;
 
   typedef enum
   {
-    ICM_20948_Internal_Acc = (1 << 0),
-    ICM_20948_Internal_Gyr = (1 << 1),
-    ICM_20948_Internal_Mag = (1 << 2),
-    ICM_20948_Internal_Tmp = (1 << 3),
-    ICM_20948_Internal_Mst = (1 << 4), // I2C Master Ineternal
-  } ICM_20948_InternalSensorID_bm;     // A bitmask of internal sensor IDs
+    ICM_20948_INTERNAL_ACC = (1 << 0),
+    ICM_20948_INTERNAL_GYR = (1 << 1),
+    ICM_20948_INTERNAL_MAG = (1 << 2),
+    ICM_20948_INTERNAL_TMP = (1 << 3),
+    ICM_20948_INTERNAL_MST = (1 << 4), // I2C Master Ineternal
+  } icm20948_internal_sensor_id_bm;     // A bitmask of internal sensor IDs
 
   typedef union
   {
     int16_t i16bit[3];
     uint8_t u8bit[6];
-  } ICM_20948_axis3bit16_t;
+  } icm20948_axis3bit16_t;
 
   typedef union
   {
     int16_t i16bit;
     uint8_t u8bit[2];
-  } ICM_20948_axis1bit16_t;
+  } icm20948_axis1bit16_t;
 
   typedef struct
   {
     uint8_t a : 2;
     uint8_t g : 2;
     uint8_t reserved_0 : 4;
-  } ICM_20948_fss_t; // Holds full-scale settings to be able to extract measurements with units
+  } icm20948_fss_t; // Holds full-scale settings to be able to extract measurements with units
 
   typedef struct
   {
     uint8_t a;
     uint8_t g;
-  } ICM_20948_dlpcfg_t; // Holds digital low pass filter settings. Members are type ICM_20948_ACCEL_CONFIG_DLPCFG_e
+  } icm20948_dlpcfg_t; // Holds digital low pass filter settings. Members are type icm20948_accel_config_dlpcfg_e
 
   typedef struct
   {
     uint16_t a;
     uint8_t g;
-  } ICM_20948_smplrt_t;
+  } icm20948_smplrt_t;
 
   typedef struct
   {
@@ -124,46 +112,46 @@ extern int memcmp(const void *, const void *, size_t); // Avoid compiler warning
     uint8_t FIFO_WM_EN_2 : 1;
     uint8_t FIFO_WM_EN_1 : 1;
     uint8_t FIFO_WM_EN_0 : 1;
-  } ICM_20948_INT_enable_t;
+  } icm20948_int_enable_t;
 
   typedef union
   {
-    ICM_20948_axis3bit16_t raw;
+    icm20948_axis3bit16_t raw;
     struct
     {
       int16_t x;
       int16_t y;
       int16_t z;
     } axes;
-  } ICM_20948_axis3named_t;
+  } icm20948_axis3named_t;
 
   typedef struct
   {
-    ICM_20948_axis3named_t acc;
-    ICM_20948_axis3named_t gyr;
-    ICM_20948_axis3named_t mag;
+    icm20948_axis3named_t acc;
+    icm20948_axis3named_t gyr;
+    icm20948_axis3named_t mag;
     union
     {
-      ICM_20948_axis1bit16_t raw;
+      icm20948_axis1bit16_t raw;
       int16_t val;
     } tmp;
-    ICM_20948_fss_t fss; // Full-scale range settings for this measurement
+    icm20948_fss_t fss; // Full-scale range settings for this measurement
     uint8_t magStat1;
     uint8_t magStat2;
-  } ICM_20948_AGMT_t;
+  } icm20948_agmt_t;
 
   typedef struct
   {
-    ICM_20948_Status_e (*write)(uint8_t regaddr, uint8_t *pdata, uint32_t len, void *user);
-    ICM_20948_Status_e (*read)(uint8_t regaddr, uint8_t *pdata, uint32_t len, void *user);
+    icm20948_status_e (*write)(uint8_t regaddr, uint8_t *pdata, uint32_t len, void *user);
+    icm20948_status_e (*read)(uint8_t regaddr, uint8_t *pdata, uint32_t len, void *user);
     // void				(*delay)(uint32_t ms);
     void *user;
-  } ICM_20948_Serif_t;                      // This is the vtable of serial interface functions
-  extern const ICM_20948_Serif_t NullSerif; // Here is a default for initialization (NULL)
+  } icm20948_serif_t;                      // This is the vtable of serial interface functions
+  extern const icm20948_serif_t NullSerif; // Here is a default for initialization (NULL)
 
   typedef struct
   {
-    const ICM_20948_Serif_t *_serif; // Pointer to the assigned Serif (Serial Interface) vtable
+    const icm20948_serif_t *_serif; // Pointer to the assigned Serif (Serial Interface) vtable
     bool _dmp_firmware_available;    // Indicates if the DMP firmware has been included. It
     bool _firmware_loaded;           // Indicates if DMP has been loaded
     uint8_t _last_bank;              // Keep track of which bank was selected last - to avoid unnecessary writes
@@ -179,73 +167,73 @@ extern int memcmp(const void *, const void *, size_t); // Avoid compiler warning
     uint16_t _dataRdyStatus;          // Diagnostics: record the setting of DATA_RDY_STATUS
     uint16_t _motionEventCtl;         // Diagnostics: record the setting of MOTION_EVENT_CTL
     uint16_t _dataIntrCtl;            // Diagnostics: record the setting of DATA_INTR_CTL
-  } ICM_20948_Device_t;               // Definition of device struct type
+  } icm20948_device_t;               // Definition of device struct type
 
-  ICM_20948_Status_e ICM_20948_init_struct(ICM_20948_Device_t *pdev); // Initialize ICM_20948_Device_t
+  icm20948_status_e icm20948_init_struct(icm20948_device_t *pdev); // Initialize icm20948_device_t
 
-  // ICM_20948_Status_e ICM_20948_Startup( ICM_20948_Device_t* pdev ); // For the time being this performs a standardized startup routine
+  // icm20948_status_e ICM_20948_Startup( icm20948_device_t* pdev ); // For the time being this performs a standardized startup routine
 
-  ICM_20948_Status_e ICM_20948_link_serif(ICM_20948_Device_t *pdev, const ICM_20948_Serif_t *s); // Links a SERIF structure to the device
+  icm20948_status_e icm20948_link_serif(icm20948_device_t *pdev, const icm20948_serif_t *s); // Links a SERIF structure to the device
 
   // use the device's serif to perform a read or write
-  ICM_20948_Status_e ICM_20948_execute_r(ICM_20948_Device_t *pdev, uint8_t regaddr, uint8_t *pdata, uint32_t len); // Executes a R or W witht he serif vt as long as the pointers are not null
-  ICM_20948_Status_e ICM_20948_execute_w(ICM_20948_Device_t *pdev, uint8_t regaddr, uint8_t *pdata, uint32_t len);
+  icm20948_status_e icm20948_execute_r(icm20948_device_t *pdev, uint8_t regaddr, uint8_t *pdata, uint32_t len); // Executes a R or W witht he serif vt as long as the pointers are not null
+  icm20948_status_e icm20948_execute_w(icm20948_device_t *pdev, uint8_t regaddr, uint8_t *pdata, uint32_t len);
 
   // Single-shot I2C on Master IF
-  ICM_20948_Status_e ICM_20948_i2c_controller_periph4_txn(ICM_20948_Device_t *pdev, uint8_t addr, uint8_t reg, uint8_t *data, uint8_t len, bool Rw, bool send_reg_addr);
-  ICM_20948_Status_e ICM_20948_i2c_master_single_w(ICM_20948_Device_t *pdev, uint8_t addr, uint8_t reg, uint8_t *data);
-  ICM_20948_Status_e ICM_20948_i2c_master_single_r(ICM_20948_Device_t *pdev, uint8_t addr, uint8_t reg, uint8_t *data);
+  icm20948_status_e icm20948_i2c_controller_periph4_txn(icm20948_device_t *pdev, uint8_t addr, uint8_t reg, uint8_t *data, uint8_t len, bool Rw, bool send_reg_addr);
+  icm20948_status_e icm20948_i2c_master_single_w(icm20948_device_t *pdev, uint8_t addr, uint8_t reg, uint8_t *data);
+  icm20948_status_e icm20948_i2c_master_single_r(icm20948_device_t *pdev, uint8_t addr, uint8_t reg, uint8_t *data);
 
   // Device Level
-  ICM_20948_Status_e ICM_20948_set_bank(ICM_20948_Device_t *pdev, uint8_t bank);                                 // Sets the bank
-  ICM_20948_Status_e ICM_20948_sw_reset(ICM_20948_Device_t *pdev);                                               // Performs a SW reset
-  ICM_20948_Status_e ICM_20948_sleep(ICM_20948_Device_t *pdev, bool on);                                         // Set sleep mode for the chip
-  ICM_20948_Status_e ICM_20948_low_power(ICM_20948_Device_t *pdev, bool on);                                     // Set low power mode for the chip
-  ICM_20948_Status_e ICM_20948_set_clock_source(ICM_20948_Device_t *pdev, ICM_20948_PWR_MGMT_1_CLKSEL_e source); // Choose clock source
-  ICM_20948_Status_e ICM_20948_get_who_am_i(ICM_20948_Device_t *pdev, uint8_t *whoami);                          // Return whoami in out prarmeter
-  ICM_20948_Status_e ICM_20948_check_id(ICM_20948_Device_t *pdev);                                               // Return 'ICM_20948_Stat_Ok' if whoami matches ICM_20948_WHOAMI
-  ICM_20948_Status_e ICM_20948_data_ready(ICM_20948_Device_t *pdev);                                             // Returns 'Ok' if data is ready
+  icm20948_status_e icm20948_set_bank(icm20948_device_t *pdev, uint8_t bank);                                 // Sets the bank
+  icm20948_status_e icm20948_sw_reset(icm20948_device_t *pdev);                                               // Performs a SW reset
+  icm20948_status_e icm20948_sleep(icm20948_device_t *pdev, bool on);                                         // Set sleep mode for the chip
+  icm20948_status_e icm20948_low_power(icm20948_device_t *pdev, bool on);                                     // Set low power mode for the chip
+  icm20948_status_e icm20948_set_clock_source(icm20948_device_t *pdev, icm20948_pwr_mgmt_1_clksel_e source); // Choose clock source
+  icm20948_status_e icm20948_get_who_am_i(icm20948_device_t *pdev, uint8_t *whoami);                          // Return whoami in out prarmeter
+  icm20948_status_e icm20948_check_id(icm20948_device_t *pdev);                                               // Return 'ICM_20948_STAT_OK' if whoami matches ICM_20948_WHOAMI
+  icm20948_status_e icm20948_data_ready(icm20948_device_t *pdev);                                             // Returns 'Ok' if data is ready
 
   // Interrupt Configuration
-  ICM_20948_Status_e ICM_20948_int_pin_cfg(ICM_20948_Device_t *pdev, ICM_20948_INT_PIN_CFG_t *write, ICM_20948_INT_PIN_CFG_t *read); // Set the INT pin configuration
-  ICM_20948_Status_e ICM_20948_int_enable(ICM_20948_Device_t *pdev, ICM_20948_INT_enable_t *write, ICM_20948_INT_enable_t *read);    // Write and or read the interrupt enable information. If non-null the write operation occurs before the read, so as to verify that the write was successful
+  icm20948_status_e icm20948_int_pin_cfg(icm20948_device_t *pdev, icm20948_int_pin_cfg_t *write, icm20948_int_pin_cfg_t *read); // Set the INT pin configuration
+  icm20948_status_e icm20948_int_enable(icm20948_device_t *pdev, icm20948_int_enable_t *write, icm20948_int_enable_t *read);    // Write and or read the interrupt enable information. If non-null the write operation occurs before the read, so as to verify that the write was successful
 
   // WoM Enable Logic configuration
-  ICM_20948_Status_e ICM_20948_wom_logic(ICM_20948_Device_t *pdev, ICM_20948_ACCEL_INTEL_CTRL_t *write, ICM_20948_ACCEL_INTEL_CTRL_t *read); //Enable or disable WoM Logic
+  icm20948_status_e icm20948_wom_logic(icm20948_device_t *pdev, icm20948_accel_intel_ctrl_t *write, icm20948_accel_intel_ctrl_t *read); //Enable or disable WoM Logic
 
   // WoM Threshold Level Configuration
-  ICM_20948_Status_e ICM_20948_wom_threshold(ICM_20948_Device_t *pdev, ICM_20948_ACCEL_WOM_THR_t *write, ICM_20948_ACCEL_WOM_THR_t *read); // Write and or read the Wake on Motion threshold. If non-null the write operation occurs before the read, so as to verify that the write was successful
+  icm20948_status_e icm20948_wom_threshold(icm20948_device_t *pdev, icm20948_accel_wom_thr_t *write, icm20948_accel_wom_thr_t *read); // Write and or read the Wake on Motion threshold. If non-null the write operation occurs before the read, so as to verify that the write was successful
 
   // Internal Sensor Options
-  ICM_20948_Status_e ICM_20948_set_sample_mode(ICM_20948_Device_t *pdev, ICM_20948_InternalSensorID_bm sensors, ICM_20948_LP_CONFIG_CYCLE_e mode); // Use to set accel, gyro, and I2C master into cycled or continuous modes
-  ICM_20948_Status_e ICM_20948_set_full_scale(ICM_20948_Device_t *pdev, ICM_20948_InternalSensorID_bm sensors, ICM_20948_fss_t fss);
-  ICM_20948_Status_e ICM_20948_set_dlpf_cfg(ICM_20948_Device_t *pdev, ICM_20948_InternalSensorID_bm sensors, ICM_20948_dlpcfg_t cfg);
-  ICM_20948_Status_e ICM_20948_enable_dlpf(ICM_20948_Device_t *pdev, ICM_20948_InternalSensorID_bm sensors, bool enable);
-  ICM_20948_Status_e ICM_20948_set_sample_rate(ICM_20948_Device_t *pdev, ICM_20948_InternalSensorID_bm sensors, ICM_20948_smplrt_t smplrt);
+  icm20948_status_e icm20948_set_sample_mode(icm20948_device_t *pdev, icm20948_internal_sensor_id_bm sensors, icm20948_lp_config_cycle_e mode); // Use to set accel, gyro, and I2C master into cycled or continuous modes
+  icm20948_status_e icm20948_set_full_scale(icm20948_device_t *pdev, icm20948_internal_sensor_id_bm sensors, icm20948_fss_t fss);
+  icm20948_status_e icm20948_set_dlpf_cfg(icm20948_device_t *pdev, icm20948_internal_sensor_id_bm sensors, icm20948_dlpcfg_t cfg);
+  icm20948_status_e icm20948_enable_dlpf(icm20948_device_t *pdev, icm20948_internal_sensor_id_bm sensors, bool enable);
+  icm20948_status_e icm20948_set_sample_rate(icm20948_device_t *pdev, icm20948_internal_sensor_id_bm sensors, icm20948_smplrt_t smplrt);
 
   // Interface Things
-  ICM_20948_Status_e ICM_20948_i2c_master_passthrough(ICM_20948_Device_t *pdev, bool passthrough);
-  ICM_20948_Status_e ICM_20948_i2c_master_enable(ICM_20948_Device_t *pdev, bool enable);
-  ICM_20948_Status_e ICM_20948_i2c_master_reset(ICM_20948_Device_t *pdev);
-  ICM_20948_Status_e ICM_20948_i2c_controller_configure_peripheral(ICM_20948_Device_t *pdev, uint8_t peripheral, uint8_t addr, uint8_t reg, uint8_t len, bool Rw, bool enable, bool data_only, bool grp, bool swap, uint8_t dataOut);
+  icm20948_status_e icm20948_i2c_master_passthrough(icm20948_device_t *pdev, bool passthrough);
+  icm20948_status_e icm20948_i2c_master_enable(icm20948_device_t *pdev, bool enable);
+  icm20948_status_e icm20948_i2c_master_reset(icm20948_device_t *pdev);
+  icm20948_status_e icm20948_i2c_controller_configure_peripheral(icm20948_device_t *pdev, uint8_t peripheral, uint8_t addr, uint8_t reg, uint8_t len, bool Rw, bool enable, bool data_only, bool grp, bool swap, uint8_t dataOut);
 
   // Higher Level
-  ICM_20948_Status_e ICM_20948_get_agmt(ICM_20948_Device_t *pdev, ICM_20948_AGMT_t *p);
+  icm20948_status_e icm20948_get_agmt(icm20948_device_t *pdev, icm20948_agmt_t *p);
 
   // FIFO
 
-  ICM_20948_Status_e ICM_20948_enable_FIFO(ICM_20948_Device_t *pdev, bool enable);
-  ICM_20948_Status_e ICM_20948_reset_FIFO(ICM_20948_Device_t *pdev);
-  ICM_20948_Status_e ICM_20948_set_FIFO_mode(ICM_20948_Device_t *pdev, bool snapshot);
-  ICM_20948_Status_e ICM_20948_get_FIFO_count(ICM_20948_Device_t *pdev, uint16_t *count);
-  ICM_20948_Status_e ICM_20948_read_FIFO(ICM_20948_Device_t *pdev, uint8_t *data, uint8_t len);
+  icm20948_status_e icm20948_enable_fifo(icm20948_device_t *pdev, bool enable);
+  icm20948_status_e icm20948_reset_fifo(icm20948_device_t *pdev);
+  icm20948_status_e icm20948_set_fifo_mode(icm20948_device_t *pdev, bool snapshot);
+  icm20948_status_e icm20948_get_fifo_count(icm20948_device_t *pdev, uint16_t *count);
+  icm20948_status_e icm20948_read_fifo(icm20948_device_t *pdev, uint8_t *data, uint8_t len);
 
   // DMP
 
-  ICM_20948_Status_e ICM_20948_enable_DMP(ICM_20948_Device_t *pdev, bool enable);
-  ICM_20948_Status_e ICM_20948_reset_DMP(ICM_20948_Device_t *pdev);
-  ICM_20948_Status_e ICM_20948_firmware_load(ICM_20948_Device_t *pdev);
-  ICM_20948_Status_e ICM_20948_set_dmp_start_address(ICM_20948_Device_t *pdev, unsigned short address);
+  icm20948_status_e icm20948_enable_dmp(icm20948_device_t *pdev, bool enable);
+  icm20948_status_e icm20948_reset_dmp(icm20948_device_t *pdev);
+  icm20948_status_e icm20948_firmware_load(icm20948_device_t *pdev);
+  icm20948_status_e icm20948_set_dmp_start_address(icm20948_device_t *pdev, unsigned short address);
 
   /** @brief Loads the DMP firmware from SRAM
 	* @param[in] data  pointer where the image
@@ -253,7 +241,7 @@ extern int memcmp(const void *, const void *, size_t); // Avoid compiler warning
 	* @param[in] load_addr  address to loading the image
 	* @return 0 in case of success, -1 for any error
 	*/
-  ICM_20948_Status_e inv_icm20948_firmware_load(ICM_20948_Device_t *pdev, const unsigned char *data, unsigned short size, unsigned short load_addr);
+  icm20948_status_e inv_icm20948_firmware_load(icm20948_device_t *pdev, const unsigned char *data, unsigned short size, unsigned short load_addr);
   /**
 	*  @brief       Write data to a register in DMP memory
 	*  @param[in]   DMP memory address
@@ -261,7 +249,7 @@ extern int memcmp(const void *, const void *, size_t); // Avoid compiler warning
 	*  @param[out]  output data from the register
 	*  @return     0 if successful.
 	*/
-  ICM_20948_Status_e inv_icm20948_write_mems(ICM_20948_Device_t *pdev, unsigned short reg, unsigned int length, const unsigned char *data);
+  icm20948_status_e inv_icm20948_write_mems(icm20948_device_t *pdev, unsigned short reg, unsigned int length, const unsigned char *data);
   /**
 	*  @brief      Read data from a register in DMP memory
 	*  @param[in]  DMP memory address
@@ -269,16 +257,16 @@ extern int memcmp(const void *, const void *, size_t); // Avoid compiler warning
 	*  @param[in]  input data from the register
 	*  @return     0 if successful.
 	*/
-  ICM_20948_Status_e inv_icm20948_read_mems(ICM_20948_Device_t *pdev, unsigned short reg, unsigned int length, unsigned char *data);
+  icm20948_status_e inv_icm20948_read_mems(icm20948_device_t *pdev, unsigned short reg, unsigned int length, unsigned char *data);
 
-  ICM_20948_Status_e inv_icm20948_set_dmp_sensor_period(ICM_20948_Device_t *pdev, enum DMP_ODR_Registers odr_reg, uint16_t interval);
-  ICM_20948_Status_e inv_icm20948_enable_dmp_sensor(ICM_20948_Device_t *pdev, enum inv_icm20948_sensor sensor, int state);     // State is actually boolean
-  ICM_20948_Status_e inv_icm20948_enable_dmp_sensor_int(ICM_20948_Device_t *pdev, enum inv_icm20948_sensor sensor, int state); // State is actually boolean
+  icm20948_status_e inv_icm20948_set_dmp_sensor_period(icm20948_device_t *pdev, enum DMP_ODR_Registers odr_reg, uint16_t interval);
+  icm20948_status_e inv_icm20948_enable_dmp_sensor(icm20948_device_t *pdev, enum inv_icm20948_sensor sensor, int state);     // State is actually boolean
+  icm20948_status_e inv_icm20948_enable_dmp_sensor_int(icm20948_device_t *pdev, enum inv_icm20948_sensor sensor, int state); // State is actually boolean
   uint8_t sensor_type_2_android_sensor(enum inv_icm20948_sensor sensor);
   enum inv_icm20948_sensor inv_icm20948_sensor_android_2_sensor_type(int sensor);
 
-  ICM_20948_Status_e inv_icm20948_read_dmp_data(ICM_20948_Device_t *pdev, icm_20948_DMP_data_t *data);
-  ICM_20948_Status_e inv_icm20948_set_gyro_sf(ICM_20948_Device_t *pdev, unsigned char div, int gyro_level);
+  icm20948_status_e inv_icm20948_read_dmp_data(icm20948_device_t *pdev, icm_20948_DMP_data_t *data);
+  icm20948_status_e inv_icm20948_set_gyro_sf(icm20948_device_t *pdev, unsigned char div, int gyro_level);
 
   // ToDo:
 
@@ -293,13 +281,10 @@ extern int memcmp(const void *, const void *, size_t); // Avoid compiler warning
   SERIAL_PORT.print(F("Configuring the magnetometer peripheral returned ")); SERIAL_PORT.println(myICM.statusString());
 
   // Operate the I2C master in duty-cycled mode
-  myICM.setSampleMode( (ICM_20948_Internal_Mst | ICM_20948_Internal_Gyr), ICM_20948_Sample_Mode_Cycled ); // options: ICM_20948_Sample_Mode_Continuous or ICM_20948_Sample_Mode_Cycled
+  myICM.setSampleMode( (ICM_20948_INTERNAL_MST | ICM_20948_INTERNAL_GYR), SAMPLE_MODE_CYCLED ); // options: SAMPLE_MODE_CONTINUOUS or SAMPLE_MODE_CYCLED
 */
 
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
 
-ICM_20948_Status_e ICM_20948_init_dmp_sensor_with_defaults(ICM_20948_Device_t *pdev);
+  icm20948_status_e icm20948_init_dmp_sensor_with_defaults(icm20948_device_t *pdev);
 
 #endif /* _ICM_20948_C_H_ */

@@ -4,10 +4,10 @@
 #include "icm20948.h"
 #include "driver/spi_master.h"
 
-void ICM_20948_init_spi(ICM_20948_Device_t *icm_device, spi_device_handle_t *handle);
+void icm20948_init_spi(icm20948_device_t *icm_device, spi_device_handle_t *handle);
 
 /* these functions are exposed in order to make a custom setup of a serif_t possible */
-ICM_20948_Status_e ICM_20948_internal_write_spi(uint8_t reg, uint8_t *data, uint32_t len, void *handle);
-ICM_20948_Status_e ICM_20948_internal_read_spi(uint8_t reg, uint8_t *buff, uint32_t len, void *handle);
+icm20948_status_e icm20948_internal_write_spi(uint8_t reg, uint8_t *data, uint32_t len, void *handle);
+icm20948_status_e icm20948_internal_read_spi(uint8_t reg, uint8_t *buff, uint32_t len, void *handle);
 
 #endif

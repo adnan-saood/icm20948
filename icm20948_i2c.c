@@ -7,10 +7,10 @@
 #define ACK_CHECK_DIS  0x0     /* I2C master will not check ack from slave */
 
 
-ICM_20948_Status_e ICM_20948_internal_write_i2c(uint8_t reg, uint8_t *data, uint32_t len, void *user)
+icm20948_status_e icm20948_internal_write_i2c(uint8_t reg, uint8_t *data, uint32_t len, void *user)
 {
-	ICM_20948_Status_e status = ICM_20948_Stat_Ok;
-	ICM_20948_Config_i2c_t *args = (ICM_20948_Config_i2c_t*)user;
+	icm20948_status_e status = ICM_20948_STAT_OK;
+	icm0948_config_i2c_t *args = (icm0948_config_i2c_t*)user;
 	i2c_cmd_handle_t cmd = i2c_cmd_link_create();
 	i2c_master_start(cmd);
 	i2c_master_write_byte(cmd, (args->i2c_addr << 1) | I2C_MASTER_WRITE, ACK_CHECK_EN);
@@ -20,16 +20,16 @@ ICM_20948_Status_e ICM_20948_internal_write_i2c(uint8_t reg, uint8_t *data, uint
 	
 	if(i2c_master_cmd_begin(args->i2c_port, cmd, 100 / portTICK_PERIOD_MS) != ESP_OK)
 	{
-		status = ICM_20948_Stat_Err;
+		status = ICM_20948_STAT_ERR;
 	}
 	i2c_cmd_link_delete(cmd);
     return status;
 }
 
-ICM_20948_Status_e ICM_20948_internal_read_i2c(uint8_t reg, uint8_t *buff, uint32_t len, void *user)
+icm20948_status_e icm20948_internal_read_i2c(uint8_t reg, uint8_t *buff, uint32_t len, void *user)
 {
-	ICM_20948_Status_e status = ICM_20948_Stat_Ok;
-	ICM_20948_Config_i2c_t *args = (ICM_20948_Config_i2c_t*)user;
+	icm20948_status_e status = ICM_20948_STAT_OK;
+	icm0948_config_i2c_t *args = (icm0948_config_i2c_t*)user;
     i2c_cmd_handle_t cmd = i2c_cmd_link_create();
 	i2c_master_start(cmd);
     i2c_master_write_byte(cmd, (args->i2c_addr << 1) | I2C_MASTER_WRITE, ACK_CHECK_EN);
@@ -41,24 +41,24 @@ ICM_20948_Status_e ICM_20948_internal_read_i2c(uint8_t reg, uint8_t *buff, uint3
 	
 	if(i2c_master_cmd_begin(args->i2c_port, cmd, 100 / portTICK_PERIOD_MS) != ESP_OK)
 	{
-		status = ICM_20948_Stat_Err;
+		status = ICM_20948_STAT_ERR;
 	}
 	i2c_cmd_link_delete(cmd);
     return status;
 }
 
 /* default serif */
-ICM_20948_Serif_t default_serif = {
-    ICM_20948_internal_write_i2c,
-    ICM_20948_internal_read_i2c,
+icm20948_serif_t default_serif = {
+    icm20948_internal_write_i2c,
+    icm20948_internal_read_i2c,
     NULL,
 };
 
-void ICM_20948_init_i2c(ICM_20948_Device_t *icm_device, ICM_20948_Config_i2c_t *args)
+void icm20948_init_i2c(icm20948_device_t *icm_device, icm0948_config_i2c_t *args)
 {
-	ICM_20948_init_struct(icm_device);
+	icm20948_init_struct(icm_device);
 	default_serif.user = (void *)args;
-    ICM_20948_link_serif(icm_device, &default_serif);
+    icm20948_link_serif(icm_device, &default_serif);
 
 #ifdef CONFIG_ICM_20948_USE_DMP
   icm_device->_dmp_firmware_available = true; // Initialize _dmp_firmware_available
@@ -67,7 +67,7 @@ void ICM_20948_init_i2c(ICM_20948_Device_t *icm_device, ICM_20948_Config_i2c_t *
 #endif
 
     icm_device->_firmware_loaded = false; // Initialize _firmware_loaded
-    icm_device->_last_bank = 255;         // Initialize _last_bank. Make it invalid. It will be set by the first call of ICM_20948_set_bank.
+    icm_device->_last_bank = 255;         // Initialize _last_bank. Make it invalid. It will be set by the first call of icm20948_set_bank.
     icm_device->_last_mems_bank = 255;    // Initialize _last_mems_bank. Make it invalid. It will be set by the first call of inv_icm20948_write_mems.
     icm_device->_gyroSF = 0;              // Use this to record the GyroSF, calculated by inv_icm20948_set_gyro_sf
     icm_device->_gyroSFpll = 0;

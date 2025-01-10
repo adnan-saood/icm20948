@@ -1,19 +1,7 @@
-/*
-
-This file contains a useful c translation of the DMP register map
-
-*/
-
 #ifndef _ICM_20948_DMP_H_
 #define _ICM_20948_DMP_H_
 
 #include <stdint.h>
-
-
-#ifdef __cplusplus
-extern "C"
-{
-#endif /* __cplusplus */
 
 #define DMP_START_ADDRESS ((unsigned short)0x1000)
 #define DMP_MEM_BANK_SIZE 256
@@ -509,31 +497,31 @@ extern "C"
     uint16_t reserved : 10;
   } icm_20948_DMP_Secondary_On_Off_t;
 
-#define icm_20948_DMP_Header_Bytes 2
-#define icm_20948_DMP_Header2_Bytes 2
-#define icm_20948_DMP_Raw_Accel_Bytes 6
-#define icm_20948_DMP_Raw_Gyro_Bytes 6
-#define icm_20948_DMP_Gyro_Bias_Bytes 6
-#define icm_20948_DMP_Compass_Bytes 6
-#define icm_20948_DMP_ALS_Bytes 8
-#define icm_20948_DMP_Quat6_Bytes 12
-#define icm_20948_DMP_Quat9_Bytes 14
-// <-- lcm20948MPUFifoControl.c suggests icm_20948_DMP_Step_Detector_Bytes comes here <--
-#define icm_20948_DMP_PQuat6_Bytes 6
-#define icm_20948_DMP_Geomag_Bytes 14
-#define icm_20948_DMP_Pressure_Bytes 6
-#define icm_20948_DMP_Gyro_Calibr_Bytes 12 // lcm20948MPUFifoControl.c suggests icm_20948_DMP_Gyro_Calibr_Bytes is not supported?
-#define icm_20948_DMP_Compass_Calibr_Bytes 12
-#define icm_20948_DMP_Step_Detector_Bytes 4 // See note above
-#define icm_20948_DMP_Accel_Accuracy_Bytes 2
-#define icm_20948_DMP_Gyro_Accuracy_Bytes 2
-#define icm_20948_DMP_Compass_Accuracy_Bytes 2
-#define icm_20948_DMP_Fsync_Detection_Bytes 2 // lcm20948MPUFifoControl.c suggests icm_20948_DMP_Fsync_Detection_Bytes is not supported?
-#define icm_20948_DMP_Pickup_Bytes 2
-#define icm_20948_DMP_Activity_Recognition_Bytes 6
-#define icm_20948_DMP_Secondary_On_Off_Bytes 2
-#define icm_20948_DMP_Footer_Bytes 2
-#define icm_20948_DMP_Maximum_Bytes 14 // The most bytes we will attempt to read from the FIFO in one go
+#define ICM_20948_DMP_HEADER_BYTES 2
+#define ICM_20948_DMP_HEADER_2_BYTES 2
+#define ICM_20948_DMP_RAW_ACCEL_BYTES 6
+#define ICM_20948_DMP_RAW_GYRO_BYTES 6
+#define ICM_20948_DMP_GYRO_BIAS_BYTES 6
+#define ICM_20948_DMP_COMPASS_BYTES 6
+#define ICM_20948_DMP_ALS_BYTES 8
+#define ICM_20948_DMP_QUAT6_BYTES 12
+#define ICM_20948_DMP_QUAT9_BYTES 14
+// <-- lcm20948MPUFifoControl.c suggests ICM_20948_DMP_STEP_DETECTOR_BYTES comes here <--
+#define ICM_20948_DMP_PQUAT6_BYTES 6
+#define ICM_20948_DMP_GEOMAG_BYTES 14
+#define ICM_20948_DMP_PRESSURE_BYTES 6
+#define ICM_20948_DMP_GYRO_CALIBR_BYTES 12 // lcm20948MPUFifoControl.c suggests icm_20948_DMP_Gyro_Calibr_Bytes is not supported?
+#define ICM_20948_DMP_COMPASS_CALIBR_BYTES 12
+#define ICM_20948_DMP_STEP_DETECTOR_BYTES 4 // See note above
+#define ICM_20948_DMP_ACCEL_ACCURACY_BYTES 2
+#define ICM_20948_DMP_GYRO_ACCURACY_BYTES 2
+#define ICM_20948_DMP_COMPASS_ACCURACY_BYTES 2
+#define ICM_20948_DMP_FSYNC_DETECTION_BYTES 2 // lcm20948MPUFifoControl.c suggests icm_20948_DMP_Fsync_Detection_Bytes is not supported?
+#define ICM_20948_DMP_PICKUP_BYTES 2
+#define ICM_20948_DMP_ACTIVITY_RECOGNITION_BYTES 6
+#define ICM_20948_DMP_SECONDARY_ON_OFF_BYTES 2
+#define ICM_20948_DMP_FOOTER_BYTES 2
+#define ICM_20948_DMP_MAXIMUM_BYTES 14 // The most bytes we will attempt to read from the FIFO in one go
 
   typedef struct
   {
@@ -541,7 +529,7 @@ extern "C"
     uint16_t header2;
     union
     {
-      uint8_t Bytes[icm_20948_DMP_Raw_Accel_Bytes];
+      uint8_t Bytes[ICM_20948_DMP_RAW_ACCEL_BYTES];
       struct
       {
         int16_t X;
@@ -551,7 +539,7 @@ extern "C"
     } Raw_Accel;
     union
     {
-      uint8_t Bytes[icm_20948_DMP_Raw_Gyro_Bytes + icm_20948_DMP_Gyro_Bias_Bytes];
+      uint8_t Bytes[ICM_20948_DMP_RAW_GYRO_BYTES + ICM_20948_DMP_GYRO_BIAS_BYTES];
       struct
       {
         int16_t X;
@@ -564,7 +552,7 @@ extern "C"
     } Raw_Gyro;
     union
     {
-      uint8_t Bytes[icm_20948_DMP_Compass_Bytes];
+      uint8_t Bytes[ICM_20948_DMP_COMPASS_BYTES];
       struct
       {
         int16_t X;
@@ -572,7 +560,7 @@ extern "C"
         int16_t Z;
       } Data;
     } Compass;
-    uint8_t ALS[icm_20948_DMP_ALS_Bytes]; // Byte[0]: Dummy, Byte[2:1]: Ch0DATA, Byte[4:3]: Ch1DATA, Byte[6:5]: PDATA, Byte[7]: Dummy
+    uint8_t ALS[ICM_20948_DMP_ALS_BYTES]; // Byte[0]: Dummy, Byte[2:1]: Ch0DATA, Byte[4:3]: Ch1DATA, Byte[6:5]: PDATA, Byte[7]: Dummy
     // The 6-Axis and 9-axis Quaternion outputs each consist of 12 bytes of data.
     // These 12 bytes in turn consists of three 4-byte elements.
     // 9-axis quaternion data and Geomag rv is always followed by 2-bytes of heading accuracy, hence the size of Quat9 and Geomag data size in the FIFO is 14 bytes.
@@ -584,7 +572,7 @@ extern "C"
     // The quaternion data is scaled by 2^30.
     union
     {
-      uint8_t Bytes[icm_20948_DMP_Quat6_Bytes];
+      uint8_t Bytes[ICM_20948_DMP_QUAT6_BYTES];
       struct
       {
         int32_t Q1;
@@ -594,7 +582,7 @@ extern "C"
     } Quat6;
     union
     {
-      uint8_t Bytes[icm_20948_DMP_Quat9_Bytes];
+      uint8_t Bytes[ICM_20948_DMP_QUAT9_BYTES];
       struct
       {
         int32_t Q1;
@@ -605,7 +593,7 @@ extern "C"
     } Quat9;
     union
     {
-      uint8_t Bytes[icm_20948_DMP_PQuat6_Bytes];
+      uint8_t Bytes[ICM_20948_DMP_PQUAT6_BYTES];
       struct
       {
         int16_t Q1;
@@ -615,7 +603,7 @@ extern "C"
     } PQuat6;
     union
     {
-      uint8_t Bytes[icm_20948_DMP_Geomag_Bytes];
+      uint8_t Bytes[ICM_20948_DMP_GEOMAG_BYTES];
       struct
       {
         int32_t Q1;
@@ -627,7 +615,7 @@ extern "C"
     uint8_t Pressure[6]; // Byte [2:0]: Pressure data, Byte [5:3]: Temperature data
     union
     {
-      uint8_t Bytes[icm_20948_DMP_Gyro_Calibr_Bytes];
+      uint8_t Bytes[ICM_20948_DMP_GYRO_CALIBR_BYTES];
       struct
       {
         int32_t X;
@@ -637,7 +625,7 @@ extern "C"
     } Gyro_Calibr; // Hardware unit scaled by 2^15
     union
     {
-      uint8_t Bytes[icm_20948_DMP_Compass_Calibr_Bytes];
+      uint8_t Bytes[ICM_20948_DMP_COMPASS_CALIBR_BYTES];
       struct
       {
         int32_t X;
@@ -663,7 +651,7 @@ extern "C"
     // Still: 0x20
     union
     {
-      uint8_t Bytes[icm_20948_DMP_Activity_Recognition_Bytes];
+      uint8_t Bytes[ICM_20948_DMP_ACTIVITY_RECOGNITION_BYTES];
       struct
       {
         icm_20948_DMP_Activity_t State_Start;
@@ -683,14 +671,10 @@ extern "C"
     // Proximity On: 0x20
     union
     {
-      uint8_t Bytes[icm_20948_DMP_Secondary_On_Off_Bytes];
+      uint8_t Bytes[ICM_20948_DMP_SECONDARY_ON_OFF_BYTES];
       icm_20948_DMP_Secondary_On_Off_t Sensors;
     } Secondary_On_Off;
     uint16_t Footer; // Gyro count?
   } icm_20948_DMP_data_t;
-
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
 
 #endif /* _ICM_20948_REGISTERS_H_ */

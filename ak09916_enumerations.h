@@ -3,13 +3,13 @@
 
 typedef enum
 {
-  AK09916_mode_power_down = 0x00,
-  AK09916_mode_single = (0x01 << 0),
-  AK09916_mode_cont_10hz = (0x01 << 1),
-  AK09916_mode_cont_20hz = (0x02 << 1),
-  AK09916_mode_cont_50hz = (0x03 << 1),
-  AK09916_mode_cont_100hz = (0x04 << 1),
-  AK09916_mode_self_test = (0x01 << 4),
-} AK09916_mode_e;
+  AK09916_MODE_POWER_DOWN = 0x00,
+  AK09916_MODE_SINGLE = (0x01 << 0),
+  AK09916_MODE_CONT_10_HZ = (0x01 << 1),
+  AK09916_MODE_CONT_20_HZ = (0x02 << 1),
+  AK09916_MODE_CONT_50_HZ = (0x03 << 1),
+  AK09916_MODE_CONT_100_HZ = (0x04 << 1),
+  AK09916_MODE_SELF_TEST = (0x01 << 4),
+} ak09916_mode_e;
 
 #endif // _AK09916_ENUMERATIONS_H_

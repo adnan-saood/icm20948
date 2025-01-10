@@ -5,7 +5,7 @@
 #include "icm20948_spi.h"
 
 
-ICM_20948_Status_e ICM_20948_internal_write_spi(uint8_t reg, uint8_t *data, uint32_t len, void *handle)
+icm20948_status_e icm20948_internal_write_spi(uint8_t reg, uint8_t *data, uint32_t len, void *handle)
 {	
     uint8_t length = len + 1;
     uint8_t tx_buffer[length];
@@ -20,13 +20,13 @@ ICM_20948_Status_e ICM_20948_internal_write_spi(uint8_t reg, uint8_t *data, uint
     };
     if (spi_device_polling_transmit((spi_device_handle_t *)handle, &trans_desc) != ESP_OK)
     {
-        return ICM_20948_Stat_Err;
+        return ICM_20948_STAT_ERR;
     }
-    return ICM_20948_Stat_Ok;
+    return ICM_20948_STAT_OK;
 }
 
 
-ICM_20948_Status_e ICM_20948_internal_read_spi(uint8_t reg, uint8_t *buff, uint32_t len, void *handle)
+icm20948_status_e icm20948_internal_read_spi(uint8_t reg, uint8_t *buff, uint32_t len, void *handle)
 {
     uint8_t length = len + 1;
     uint8_t tx_buffer[length];    
@@ -44,27 +44,27 @@ ICM_20948_Status_e ICM_20948_internal_read_spi(uint8_t reg, uint8_t *buff, uint3
     };
     if (spi_device_polling_transmit((spi_device_handle_t *)handle, &trans_desc) != ESP_OK)
     {
-        return ICM_20948_Stat_Err;
+        return ICM_20948_STAT_ERR;
     }
     /* copy received data back to buff */
     memcpy(buff, rx_buffer+1, len);
-  	return ICM_20948_Stat_Ok;
+  	return ICM_20948_STAT_OK;
 }
 
 /* setup a default SPI-serif for a single-device use. If someone wants to use mutliple ICM-20948, the
    a serif for each device has to be implemented. */
-ICM_20948_Serif_t default_serif = {
-    ICM_20948_internal_write_spi,
-    ICM_20948_internal_read_spi,
+icm20948_serif_t default_serif = {
+    icm20948_internal_write_spi,
+    icm20948_internal_read_spi,
     NULL,
 };
 
 
-void ICM_20948_init_spi(ICM_20948_Device_t *icm_device, spi_device_handle_t *handle)
+void icm20948_init_spi(icm20948_device_t *icm_device, spi_device_handle_t *handle)
 {
     default_serif.user = *handle;
-    ICM_20948_init_struct(icm_device);
-    ICM_20948_link_serif(icm_device, &default_serif);
+    icm20948_init_struct(icm_device);
+    icm20948_link_serif(icm_device, &default_serif);
 
 #if CONFIG_ICM_20948_USE_DMP
   icm_device->_dmp_firmware_available = true; // Initialize _dmp_firmware_available
@@ -73,7 +73,7 @@ void ICM_20948_init_spi(ICM_20948_Device_t *icm_device, spi_device_handle_t *han
 #endif
 
     icm_device->_firmware_loaded = false; // Initialize _firmware_loaded
-    icm_device->_last_bank = 255;         // Initialize _last_bank. Make it invalid. It will be set by the first call of ICM_20948_set_bank.
+    icm_device->_last_bank = 255;         // Initialize _last_bank. Make it invalid. It will be set by the first call of icm20948_set_bank.
     icm_device->_last_mems_bank = 255;    // Initialize _last_mems_bank. Make it invalid. It will be set by the first call of inv_icm20948_write_mems.
     icm_device->_gyroSF = 0;              // Use this to record the GyroSF, calculated by inv_icm20948_set_gyro_sf
     icm_device->_gyroSFpll = 0;

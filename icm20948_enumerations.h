@@ -1,16 +1,5 @@
-/*
-
-This file contains a useful c translation of the datasheet register map values
-
-*/
-
 #ifndef _ICM_20948_ENUMERATIONS_H_
 #define _ICM_20948_ENUMERATIONS_H_
-
-#ifdef __cplusplus
-extern "C"
-{
-#endif /* __cplusplus */
 
   // // Generalized
   // REG_BANK_SEL = 0x7F,
@@ -25,18 +14,18 @@ extern "C"
 
   typedef enum
   {
-    ICM_20948_Sample_Mode_Continuous = 0x00,
-    ICM_20948_Sample_Mode_Cycled,
-  } ICM_20948_LP_CONFIG_CYCLE_e;
+    SAMPLE_MODE_CONTINUOUS = 0x00,
+    SAMPLE_MODE_CYCLED,
+  } icm20948_lp_config_cycle_e;
 
   // AGB0_REG_PWR_MGMT_1,
 
   typedef enum
   {
-    ICM_20948_Clock_Internal_20MHz = 0x00,
-    ICM_20948_Clock_Auto,
-    ICM_20948_Clock_TimingReset = 0x07
-  } ICM_20948_PWR_MGMT_1_CLKSEL_e;
+    CLOCK_INTERNAL_20MHZ = 0x00,
+    CLOCK_AUTO,
+    CLOCK_TIMING_RESET = 0x07
+  } icm20948_pwr_mgmt_1_clksel_e;
 
   // AGB0_REG_PWR_MGMT_2,
   // 	// Break
@@ -150,23 +139,23 @@ ODR is computed as follows:
 
   typedef enum
   { // Full scale range options in degrees per second
-    dps250 = 0x00,
-    dps500,
-    dps1000,
-    dps2000,
-  } ICM_20948_GYRO_CONFIG_1_FS_SEL_e;
+    DPS_250 = 0x00,
+    DPS_500,
+    DPS_1000,
+    DPS_2000,
+  } icm20948_gyro_config_1_fs_sel_e;
 
   typedef enum
   { // Format is dAbwB_nXbwY - A is integer part of 3db BW, B is fraction. X is integer part of nyquist bandwidth, Y is fraction
-    gyr_d196bw6_n229bw8 = 0x00,
-    gyr_d151bw8_n187bw6,
-    gyr_d119bw5_n154bw3,
-    gyr_d51bw2_n73bw3,
-    gyr_d23bw9_n35bw9,
-    gyr_d11bw6_n17bw8,
-    gyr_d5bw7_n8bw9,
-    gyr_d361bw4_n376bw5,
-  } ICM_20948_GYRO_CONFIG_1_DLPCFG_e;
+    GYR_D196BW6_N229BW8 = 0x00,
+    GYR_D151BW8_N187BW6,
+    GYR_D119BW5_B154BW3,
+    GYR_D51BW2_N73BW3,
+    GYR_D23BW9_N35BW9,
+    GYR_D11BW6_N17BW8,
+    GYR_D5BW7_N8BW9,
+    GYR_D361BW4_N376BW5,
+  } icm20948_gyro_config_1_dlpcfg_e;
 
   // AGB2_REG_GYRO_CONFIG_2,
   // AGB2_REG_XG_OFFS_USRH,
@@ -185,23 +174,23 @@ ODR is computed as follows:
 
   typedef enum
   {
-    gpm2 = 0x00,
-    gpm4,
-    gpm8,
-    gpm16,
-  } ICM_20948_ACCEL_CONFIG_FS_SEL_e;
+    GPM_2 = 0x00,
+    GPM_4,
+    GPM_8,
+    GPM_16,
+  } icm20948_accel_config_fs_sel_e;
 
   typedef enum
   { // Format is dAbwB_nXbwZ - A is integer part of 3db BW, B is fraction. X is integer part of nyquist bandwidth, Y is fraction
-    acc_d246bw_n265bw = 0x00,
-    acc_d246bw_n265bw_1,
-    acc_d111bw4_n136bw,
-    acc_d50bw4_n68bw8,
-    acc_d23bw9_n34bw4,
-    acc_d11bw5_n17bw,
-    acc_d5bw7_n8bw3,
-    acc_d473bw_n499bw,
-  } ICM_20948_ACCEL_CONFIG_DLPCFG_e;
+    ACC_D246BW_N265BW = 0x00,
+    ACC_D246BW_N265BW_1,
+    ACC_D111BW4_N136BW,
+    ACC_D50BW4_N68BW8,
+    ACC_D23BW9_N34BW4,
+    ACC_D11BW5_N17BW,
+    ACC_D5BW7_N8BW3,
+    ACC_D473BW_N499BW,
+  } icm20948_accel_config_dlpcfg_e;
 
   // AGB2_REG_ACCEL_CONFIG_2,
   // 	// Break
@@ -255,9 +244,5 @@ ODR is computed as follows:
   // M_REG_CNTL3,
   // M_REG_TS1,
   // M_REG_TS2,
-
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
 
 #endif /* _ICM_20948_ENUMERATIONS_H_ */
