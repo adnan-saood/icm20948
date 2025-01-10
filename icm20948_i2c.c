@@ -59,7 +59,7 @@ void ICM_20948_init_i2c(ICM_20948_Device_t *icm_device, ICM_20948_Config_i2c_t *
 	ICM_20948_init_struct(icm_device);
 	default_serif.user = (void *) &args;
     ICM_20948_link_serif(icm_device, &default_serif);
-
+/*
 #ifdef CONFIG_ICM_20948_USE_DMP
   icm_device->_dmp_firmware_available = true; // Initialize _dmp_firmware_available
 #else
@@ -75,4 +75,5 @@ void ICM_20948_init_i2c(ICM_20948_Device_t *icm_device, ICM_20948_Config_i2c_t *
     icm_device->_enabled_Android_1 = 0;      // Keep track of which Android sensors are enabled: 32-
     icm_device->_enabled_Android_intr_0 = 0; // Keep track of which Android sensor interrupts are enabled: 0-31
     icm_device->_enabled_Android_intr_1 = 0; // Keep track of which Android sensor interrupts are enabled: 32-
+*/	
 }

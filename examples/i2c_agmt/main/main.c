@@ -27,7 +27,7 @@ i2c_config_t conf = {
 
 /* ICM 20948 configuration */
 ICM_20948_Config_i2c_t icm_config = {
-	.i2c_port = CONFIG_I2C_MASTER_NUM,
+	.i2c_port = I2C_NUM_0,
 	.i2c_addr = ICM_20948_I2C_ADDR_AD1
 };
 

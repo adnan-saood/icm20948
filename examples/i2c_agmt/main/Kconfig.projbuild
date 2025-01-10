@@ -14,10 +14,4 @@ menu "ICM-20948 Example"
         help
             GPIO number for I2C Master data line.
 
-    config I2C_MASTER_NUM
-        int "I2C MASTER Num"
-        default 1
-        help
-            I2C Channel
-
 endmenu

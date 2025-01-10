@@ -5,7 +5,7 @@
 // Combine all of the DMP start-up code from the earlier DMP examples
 // This function is defined as __attribute__((weak)) so you can overwrite it if you want to,
 //   e.g. to modify the sample rate
-ICM_20948_Status_e ICM_20948_initialize_dmp(ICM_20948_Device_t *pdev)
+ICM_20948_Status_e ICM_20948_init_dmp_sensor_with_defaults(ICM_20948_Device_t *pdev)
 {
     ICM_20948_Status_e  worstResult = ICM_20948_Stat_Ok;
     // The ICM-20948 is awake and ready but hasn't been configured. Let's step through the configuration
@@ -35,7 +35,6 @@ ICM_20948_Status_e ICM_20948_initialize_dmp(ICM_20948_Device_t *pdev)
     // true: set the I2C_SLV0_CTRL I2C_SLV0_BYTE_SW to byte-swap the data from the mag (copied from inv_icm20948_resume_akm)
     result = ICM_20948_i2c_controller_configure_peripheral(pdev, 0, MAG_AK09916_I2C_ADDR, AK09916_REG_RSV2, 10, true, true, false, true, true, 0); 
     if (result > worstResult) worstResult = result;
-    ESP_LOGE(TAG, "1: %d", result);
 
     // We also need to set up I2C_SLV1 to do the Single Measurement triggering:
     // 1: use I2C_SLV1
