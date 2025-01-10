@@ -11,6 +11,7 @@ The imementation of the interface is flexible
 #include <stdint.h>
 #include <stdbool.h>
 #include <stddef.h>
+#include "sdkconfig.h"
 
 #include "icm20948_registers.h"
 #include "icm20948_enumerations.h" // This is to give users access to usable value definiitons
@@ -23,10 +24,6 @@ extern "C"
 #endif /* __cplusplus */
 
 extern int memcmp(const void *, const void *, size_t); // Avoid compiler warnings
-
-// Define if the DMP will be supported
-// Note: you must have 14290/14301 Bytes of program memory available to store the DMP firmware!
-//#define ICM_20948_USE_DMP // Uncomment this line to enable DMP support. You can of course use ICM_20948_USE_DMP as a compiler flag too
 
 // There are two versions of the InvenSense DMP firmware for the ICM20948 - with slightly different sizes
 #define DMP_CODE_SIZE 14301 /* eMD-SmartMotion-ICM20948-1.1.0-MP */
@@ -56,7 +53,7 @@ extern int memcmp(const void *, const void *, size_t); // Avoid compiler warning
     ICM_20948_Stat_InvalSensor, // Tried to apply a function to a sensor that does not support it (e.g. DLPF to the temperature sensor)
     ICM_20948_Stat_NoData,
     ICM_20948_Stat_SensorNotSupported,
-    ICM_20948_Stat_DMPNotSupported,    // DMP not supported (no #define ICM_20948_USE_DMP)
+    ICM_20948_Stat_DMPNotSupported,    // DMP not supported (enable it in menuconfig)
     ICM_20948_Stat_DMPVerifyFail,      // DMP was written but did not verify correctly
     ICM_20948_Stat_FIFONoDataAvail,    // FIFO contains no data
     ICM_20948_Stat_FIFOIncompleteData, // FIFO contained incomplete data
@@ -302,5 +299,7 @@ extern int memcmp(const void *, const void *, size_t); // Avoid compiler warning
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
+
+ICM_20948_Status_e ICM_20948_init_dmp_sensor_with_defaults(ICM_20948_Device_t *pdev);
 
 #endif /* _ICM_20948_C_H_ */

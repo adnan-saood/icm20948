@@ -59,4 +59,20 @@ void ICM_20948_init_i2c(ICM_20948_Device_t *icm_device, ICM_20948_Config_i2c_t *
 	ICM_20948_init_struct(icm_device);
 	default_serif.user = (void *) &args;
     ICM_20948_link_serif(icm_device, &default_serif);
+
+#ifdef CONFIG_ICM_20948_USE_DMP
+  icm_device->_dmp_firmware_available = true; // Initialize _dmp_firmware_available
+#else
+  icm_device->_dmp_firmware_available = false; // Initialize _dmp_firmware_available
+#endif
+
+    icm_device->_firmware_loaded = false; // Initialize _firmware_loaded
+    icm_device->_last_bank = 255;         // Initialize _last_bank. Make it invalid. It will be set by the first call of ICM_20948_set_bank.
+    icm_device->_last_mems_bank = 255;    // Initialize _last_mems_bank. Make it invalid. It will be set by the first call of inv_icm20948_write_mems.
+    icm_device->_gyroSF = 0;              // Use this to record the GyroSF, calculated by inv_icm20948_set_gyro_sf
+    icm_device->_gyroSFpll = 0;
+    icm_device->_enabled_Android_0 = 0;      // Keep track of which Android sensors are enabled: 0-31
+    icm_device->_enabled_Android_1 = 0;      // Keep track of which Android sensors are enabled: 32-
+    icm_device->_enabled_Android_intr_0 = 0; // Keep track of which Android sensor interrupts are enabled: 0-31
+    icm_device->_enabled_Android_intr_1 = 0; // Keep track of which Android sensor interrupts are enabled: 32-
 }

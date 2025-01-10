@@ -6,7 +6,7 @@
  * Icm20948 device require a DMP image to be loaded on init
  * Provide such images by mean of a byte array
 */
-#if defined(ICM_20948_USE_DMP) // Only include the 14301 Bytes of DMP if ICM_20948_USE_DMP is defined
+#if CONFIG_ICM_20948_USE_DMP
 
 #if defined(ARDUINO_ARCH_MBED) // ARDUINO_ARCH_MBED (APOLLO3 v2) does not support or require pgmspace.h / PROGMEM
 const uint8_t dmp3_image[] = {
@@ -1310,10 +1310,10 @@ ICM_20948_Status_e ICM_20948_reset_DMP(ICM_20948_Device_t *pdev)
 
 ICM_20948_Status_e ICM_20948_firmware_load(ICM_20948_Device_t *pdev)
 {
-#if defined(ICM_20948_USE_DMP)
-  return (inv_icm20948_firmware_load(pdev, dmp3_image, sizeof(dmp3_image), DMP_LOAD_START));
+#if CONFIG_ICM_20948_USE_DMP
+    return (inv_icm20948_firmware_load(pdev, dmp3_image, sizeof(dmp3_image), DMP_LOAD_START));
 #else
-  return ICM_20948_Stat_DMPNotSupported;
+    return ICM_20948_Stat_DMPNotSupported;
 #endif
 }
 

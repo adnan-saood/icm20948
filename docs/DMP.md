@@ -33,23 +33,7 @@ We have added [five new examples](https://github.com/sparkfun/SparkFun_ICM-20948
 
 ## Is DMP support enabled by default?
 
-No. The DMP occupies 14kBytes of program memory and so, to allow the library to continue to run on processors with limited memory, DMP support is disabled by default.
-
-You can enable it by editing the file called ```ICM_20948_C.h``` and uncommenting [line 29](https://github.com/sparkfun/SparkFun_ICM-20948_ArduinoLibrary/blob/master/src/util/ICM_20948_C.h#L29):
-
-Change:
-
-```
-//#define ICM_20948_USE_DMP
-```
-
-to:
-
-```
-#define ICM_20948_USE_DMP
-```
-
-You will find ```ICM_20948_C.h``` in the library _src\util_ folder. If you are using Windows, you will find it in _Documents\Arduino\libraries\SparkFun_ICM-20948_ArduinoLibrary\src\util_.
+No. The DMP occupies 14kBytes of program memory and so, to allow the library to continue to run on processors with limited memory, DMP support is disabled by default. You can enable it in menuconfig. 
 
 ## How is the DMP loaded and started?
 

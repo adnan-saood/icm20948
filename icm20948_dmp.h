@@ -9,6 +9,7 @@ This file contains a useful c translation of the DMP register map
 
 #include <stdint.h>
 
+
 #ifdef __cplusplus
 extern "C"
 {
