@@ -9,18 +9,25 @@
 
 This is a modified copy of the SparkFun Arduino library for the TDK InvenSense ICM-20948 Inertial Measurement Unit 9-Degree Of Freedom sensor from [SparkFun_ICM-20948_ArduinoLibrary](https://github.com/sparkfun/SparkFun_ICM-20948_ArduinoLibrary). It bases on the Portable C99 code and uses the I2C and SPI driver of ESP-IDF. The code bases on Version 1.3 of the SparkFun Arduino library and  includes support for the InvenSense Digital Motion Processor (DMP™). You can find further details in [DMP.md](docs/DMP.md).
 
-# Supported Functions
+## Supported Features
 * I2C
 * SPI
 * DMP
 
-# Example
+## Using component
+```bash
+idf.py add-dependency "cybergear-robotics/icm20948"
+```
 
+## Example
 Not all examples are ported. For further examples, please look at the original project.
 
-1. Clone Repository
+1. create example project
+```bash
+idf.py create-project-from-example "cybergear-robotics/icm20948:i2c_agmt"
+```
 2. Go to to example directory (for example `spi_agmt`)
-   `cd ./icm20948/examples/spi_agmt`
+   `cd spi_agmt`
 3. Set ESP chip
    `idf.py set-target esp32`
 4. Configure ICM-20948 settings
@@ -28,11 +35,11 @@ Not all examples are ported. For further examples, please look at the original p
 5. Build, flash
    `idf.py build flash monitor`
 
-# DMP Support
+## DMP Support
 
 DMP support can be enabled in menuconfig "ICM-20948 Settings". An example is provided in `examples/spi_dmp_quad9_orientation`.
 
-# Related projects
+## Related projects
 
 | Project | Framework | I2C | SPI | DMP |
 | :---:   | :---: | :---: | :---: | :---: |
