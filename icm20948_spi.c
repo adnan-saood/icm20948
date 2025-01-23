@@ -67,9 +67,9 @@ void icm20948_init_spi(icm20948_device_t *icm_device, spi_device_handle_t *handl
     icm20948_link_serif(icm_device, &default_serif);
 
 #if CONFIG_ICM_20948_USE_DMP
-  icm_device->_dmp_firmware_available = true; // Initialize _dmp_firmware_available
+  icm_device->_dmp_firmware_available = true; // Initialize _dmp_firmware_available 
 #else
-  icm_device->_dmp_firmware_available = true; // Initialize _dmp_firmware_available
+  icm_device->_dmp_firmware_available = false; // Initialize _dmp_firmware_available
 #endif
 
     icm_device->_firmware_loaded = false; // Initialize _firmware_loaded
